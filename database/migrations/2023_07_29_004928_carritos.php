@@ -12,7 +12,14 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    {
+    { 
+        Schema::create('carritos', function (Blueprint $table) {
+        $table->id('id_carrito');
+        $table->unsignedBigInteger('id_usuario');
+        $table->unsignedBigInteger('id_producto');
+        $table->integer('cantidad');
+        $table->dateTime('fecha_agregado')->default(DB::raw('CURRENT_TIMESTAMP'));
+    });
         //
     }
 
@@ -23,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('carritos');
     }
 };

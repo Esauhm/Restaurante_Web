@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id('id_rol');
+            $table->string('rol', 50);
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        //
+        Schema::dropIfExists('roles');
+        
     }
 };

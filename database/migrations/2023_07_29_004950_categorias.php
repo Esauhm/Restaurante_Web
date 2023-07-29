@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->id('id_categoria');
+            $table->string('descripcion', 50);
+            $table->integer('estado');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        //
+        Schema::dropIfExists('categorias');
     }
 };

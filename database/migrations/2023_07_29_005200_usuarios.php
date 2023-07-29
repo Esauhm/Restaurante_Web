@@ -13,16 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('usuarios', function (Blueprint $table) {
+            $table->id('id_usuario');
+            $table->string('nombre_usuario', 50);
+            $table->string('apellido_usuario', 50);
+            $table->string('correo', 50);
+            $table->string('telefono', 11);
+            $table->string('direccion', 150);
+            $table->string('sexo', 10);
+            $table->unsignedBigInteger('rol');
+            $table->string('password', 60);
+        });
+
+        Schema::table('usuarios', function (Blueprint $table) {
+            $table->foreign('rol')->references('id_rol')->on('roles')->onDelete('cascade')->onUpdate('cascade');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        //
+        Schema::dropIfExists('usuarios');
     }
 };
