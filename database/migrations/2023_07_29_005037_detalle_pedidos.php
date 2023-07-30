@@ -18,11 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_producto');
             $table->unsignedBigInteger('id_pedido');
             $table->integer('cantidad')->nullable();
-        });
 
-        Schema::table('detalle_pedidos', function (Blueprint $table) {
-            $table->foreign('id_pedido')->references('id_pedido')->on('pedidos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_producto')->references('id_producto')->on('productos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_pedido')->references('id_pedido')->on('pedidos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

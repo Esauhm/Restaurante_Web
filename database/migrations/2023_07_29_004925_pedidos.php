@@ -15,12 +15,18 @@ return new class extends Migration
     {
         //
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id('id_pedido');
+            $table->bigIncrements('id_pedido');
             $table->double('total_pagar');
             $table->date('fecha_pedido');
             $table->unsignedBigInteger('id_estado_pedido');
             $table->unsignedBigInteger('id_usuario');
             $table->string('ubicacion', 150);
+
+         
+        });
+        Schema::table('pedidos', function (Blueprint $table) {
+            $table->foreign('id_estado_pedido')->references('id_estado_pedido')->on('estado_pedidos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -31,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('pedidos');
     }
 };

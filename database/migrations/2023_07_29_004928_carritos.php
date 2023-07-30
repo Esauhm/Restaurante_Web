@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     { 
         Schema::create('carritos', function (Blueprint $table) {
-        $table->id('id_carrito');
-        $table->unsignedBigInteger('id_usuario');
-        $table->unsignedBigInteger('id_producto');
-        $table->integer('cantidad');
-        $table->dateTime('fecha_agregado')->default(DB::raw('CURRENT_TIMESTAMP'));
-    });
-        //
+            $table->id('id_carrito');
+            $table->bigInteger('id_usuario')->unsigned();
+            $table->double('total_pagar');
+            $table->timestamps();
+
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade');
+        });
     }
 
     /**
