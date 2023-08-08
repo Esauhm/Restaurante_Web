@@ -1,0 +1,19 @@
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 100;
+}
+
+.container-home {
+    display: flex;
+    flex-direction: row;
+    min-width: 600px;
+    max-width: 800px;
+}
+
+.container div {
+    margin: 0 10px;
+}
+
+.container img {
+    width: 100%;
+}
