@@ -1,0 +1,53 @@
+*{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+    background-color: #ececec !important;
+}
+
+.navbar-brand{
+    background-image: linear-gradient(to right, #F2921D, #A61F69);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.navbar{
+    box-shadow: 5px 0px 10px 3px rgb(211, 211, 211);
+}
+
+.nav-link , .active{
+    color: #F2921D !important;
+    font-size: 1.1rem;
+    
+    
+}
+
+.dropstyle{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+    color: black;
+}
+.nav-link2 , .active{
+    color: #F2921D !important;
+    font-size: 1.1rem;
+    
+}
+
+.active{
+    font-weight: bold;
+}
+
+.registrar-btn > .nav-link{
+    background-color: #A61F69;
+    border-radius: 5px;
+    color: white !important;
+    
+}
+
+.bg-morado{
+    background-color: #A61F69 !important;
+}
