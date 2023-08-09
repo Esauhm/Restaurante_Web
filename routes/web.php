@@ -64,3 +64,16 @@ Route::prefix('categorias')->group(function () {
     // Ruta para eliminar un registro específico de la base de datos (Delete)
     Route::delete('/{categoria}', [CategoriaController::class, 'destroy'])->name('categoria.destroy');
 });
+
+
+
+
+Route::prefix('productos')->group(function () {
+    Route::get('/', [ProductoController::class, 'index'])->name('productos.index');
+    Route::get('/create', [ProductoController::class, 'create'])->name('productos.create');
+    Route::post('/', [ProductoController::class, 'store'])->name('productos.store');
+    Route::get('/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+    Route::get('/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
+    Route::put('/{producto}', [ProductoController::class, 'update'])->name('productos.update');
+    Route::delete('/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+});
