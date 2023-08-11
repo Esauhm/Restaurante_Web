@@ -101,10 +101,21 @@ Route::view('/nosotros', 'home.nosotros')->name('nosotros');
 
 Route::get('/productos', [FoodController::class, 'index'])->name('food.index');
 
-Route::get('/promociones', [HomeController::class, 'promociones'])->name('food.promociones');
+Route::get('/promociones', [HomeController::class, 'promociones'])->name('home.promociones');
 
 
+Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 
+
+Route::get('/carrito', [CarritoController::class, 'VerCarrito'])->name('home.carrito');
+
+Route::post('/carrito/agregar-producto', [CarritoController::class, 'agregarProducto'])->name('carrito.agregarProducto');
+
+
+Route::post('/carrito/eliminar-producto', 'CarritoController@eliminarProducto')->name('carrito.eliminarProducto');
+
+
+Route::post('/pago/pagar', 'CarritoController@procesarPago')->name('pago.pagar');
 
 
 

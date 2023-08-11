@@ -59,7 +59,7 @@ class Producto extends Model
     public static function buscarPorId($id_producto)
     {
         try {
-            $producto = DB::table('producto')
+            $producto = DB::table('productos')
                 ->where('id_producto', $id_producto)
                 ->first();
 
@@ -74,7 +74,7 @@ class Producto extends Model
     public static function agregarProducto($nombre, $precio, $descripcion_prod, $categoria, $image_url, $estado)
     {
         try {
-            DB::table('producto')->insert([
+            DB::table('productos')->insert([
                 'nombre' => $nombre,
                 'precio' => $precio,
                 'descripcion_prod' => $descripcion_prod,
@@ -90,7 +90,7 @@ class Producto extends Model
     public static function editarProducto($id_producto)
     {
         try {
-            $producto = DB::table('producto')
+            $producto = DB::table('productos')
                 ->where('id_producto', $id_producto)
                 ->first();
 
@@ -105,7 +105,7 @@ class Producto extends Model
     public static function actualizarProducto($id_producto, $nombre, $precio, $descripcion_prod, $categoria, $image_url, $estado)
     {
         try {
-            DB::table('producto')
+            DB::table('productos')
                 ->where('id_producto', $id_producto)
                 ->update([
                     'nombre' => $nombre,
@@ -125,7 +125,7 @@ class Producto extends Model
     public static function actualizarEstado($id_producto, $nuevo_estado)
     {
         try {
-            DB::table('producto')
+            DB::table('productos')
                 ->where('id_producto', $id_producto)
                 ->update(['estado' => $nuevo_estado]);
         } catch (\Exception $e) {

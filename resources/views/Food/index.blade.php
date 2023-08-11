@@ -45,7 +45,7 @@
                         </div>
                         <p class="mb-5">{{ $producto->descripcion_prod }}</p>
                         @auth
-                            <form method="POST" action="{{ route('carrito.agregar') }}">
+                            <form method="POST" action="{{ route('carrito.agregarProducto') }}">
                                 @csrf
                                 <input type="hidden" name="id_producto" value="{{ $producto->id_producto }}">
                                 <div class="bay">
