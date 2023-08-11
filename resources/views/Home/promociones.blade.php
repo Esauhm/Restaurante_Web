@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="/css/cardfood.css">
 <link rel="stylesheet" href="/css/food.css">
 
-
 @extends('layouts.app')
 
 @section('content')
 <div class="container pt-2">
-    @if (session('user'))
+
+    @if(session('user'))
         <!-- Código para agregar al carrito -->
     @else
         <div class="text-center alert alert-info" role="alert">
@@ -16,18 +16,18 @@
 
     <div class="container pt-2 mt-3">
         <div class="products">
-            @foreach ($productos as $producto)
-                @if ($producto->estado == 1)
+            @foreach($productos as $producto)
+                @if($producto->estado == 1)
                     <div class="product">
                         <div class="image">
-                            <img class="imgt" src="{{ $producto->image_url }}" alt="">
+                            {{-- <img class="imgt" src="{{ $producto->getImageUrl() }}" alt=""> --}}
                         </div>
                         <div class="namePrice">
                             <h3>{{ $producto->nombre }}</h3>
                             <span>{{ "$ " . $producto->precio }}</span>
                         </div>
                         <p class="mb-5">{{ $producto->descripcion_prod }}</p>
-                        @if (session('user'))
+                        @if(session('user'))
                             <form method="POST" action="{{ route('carrito.agregarProducto') }}">
                                 @csrf
                                 <input type="hidden" name="id_producto" value="{{ $producto->id_producto }}">

@@ -97,15 +97,18 @@ Route::prefix('productos')->group(function () {
 Route::view('/nosotros', 'home.nosotros')->name('nosotros');
 
 //Mostrar la vista de productos
-Route::get('/productos', 'FoodController@index')->name('food.index');
-
-
-//Ruta para agregar productos al carrito
-Route::post('/carrito/agregar', 'CarritoController@agregarProducto')->name('carrito.agregar');
-
-
-
-
-
 
 Route::get('/productos', [FoodController::class, 'index'])->name('food.index');
+
+Route::get('/promociones', [HomeController::class, 'promociones'])->name('food.promociones');
+
+
+
+
+
+
+
+
+
+
+

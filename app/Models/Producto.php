@@ -42,10 +42,10 @@ class Producto extends Model
     public static function listarProductosByIdCategoria($idCategoria)
     {
         try {
-            $productos = DB::table('producto')
-                ->join('categoria', 'producto.categoria', '=', 'categoria.id_categoria')
-                ->select('producto.id_producto', 'producto.nombre', 'producto.precio', 'producto.descripcion_prod', 'categoria.descripcion AS categoria', 'producto.image_url', 'producto.estado')
-                ->where('producto.categoria', $idCategoria)
+            $productos = DB::table('productos')
+                ->join('categorias', 'productos.categoria', '=', 'categorias.id_categoria')
+                ->select('productos.id_producto', 'productos.nombre', 'productos.precio', 'productos.descripcion_prod', 'categorias.descripcion AS categoria', 'productos.image_url', 'productos.estado')
+                ->where('productos.categoria', $idCategoria)
                 ->get();
 
             return $productos;

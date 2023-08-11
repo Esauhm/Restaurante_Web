@@ -30,4 +30,7 @@ class FoodController extends Controller
 
         return view('food.index', $data);
     }
+
+
+    
 }
