@@ -3,44 +3,87 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-/**
- * Class Categoria
- *
- * @property $id_categoria
- * @property $nombre
- * @property $descripcion
- *
- * @property Producto[] $productos
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
+
 class Categoria extends Model
 {
-  protected $primaryKey = 'id_categoria'; // Especificamos la clave primaria
+    protected $table = 'categorias';
+    protected $primaryKey = 'id_categoria';
+    public $timestamps = false;
 
-  static $rules = [
-      'id_categoria' => 'required',
-      'nombre' => 'required',
-  ];
+    protected $fillable = [
+        'descripcion', 'estado'
+    ];
 
-    protected $perPage = 20;
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['id_categoria','nombre','descripcion'];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function productos()
+    // Método para agregar una nueva categoría
+    public static function agregarCategoria($descripcion, $estado)
     {
-        return $this->hasMany('App\Models\Producto', 'categoria', 'id_categoria');
+        try {
+            DB::table('categoria')->insert([
+                'descripcion' => $descripcion,
+                'estado' => $estado,
+            ]);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
-    
 
+    // Método para modificar una categoría existente
+    public static function modificarCategoria($idCategoria, $descripcion, $estado)
+    {
+        try {
+            DB::table('categoria')
+                ->where('id_categoria', $idCategoria)
+                ->update([
+                    'descripcion' => $descripcion,
+                    'estado' => $estado,
+                ]);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    // Método para obtener una categoría por su ID
+    public static function editarCategoria($id_categoria)
+    {
+        try {
+            $categoria = DB::table('categoria')
+                ->where('id_categoria', $id_categoria)
+                ->first();
+
+            return $categoria;
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    // Método para obtener todas las categorías
+    public static function listarCategorias()
+    {
+        try {
+            $categorias = DB::table('categorias')
+                ->select('id_categoria', 'estado', 'descripcion')
+                ->get();
+
+            return $categorias;
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null; // Devuelve un valor nulo en caso de error
+        }
+    }
+
+    // Método para actualizar el estado de una categoría
+    public static function actualizarEstado($id_categoria, $nuevo_estado)
+    {
+        try {
+            DB::table('categoria')
+                ->where('id_categoria', $id_categoria)
+                ->update([
+                    'estado' => $nuevo_estado,
+                ]);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }

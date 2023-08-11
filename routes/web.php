@@ -91,3 +91,21 @@ Route::prefix('productos')->group(function () {
     Route::put('/{producto}', [ProductoController::class, 'update'])->name('productos.update');
     Route::delete('/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });
+
+
+//Ruta para cargar la vista de nosotros
+Route::view('/nosotros', 'home.nosotros')->name('nosotros');
+
+//Mostrar la vista de productos
+Route::get('/productos', 'FoodController@index')->name('food.index');
+
+
+//Ruta para agregar productos al carrito
+Route::post('/carrito/agregar', 'CarritoController@agregarProducto')->name('carrito.agregar');
+
+
+
+
+
+
+Route::get('/productos', [FoodController::class, 'index'])->name('food.index');
