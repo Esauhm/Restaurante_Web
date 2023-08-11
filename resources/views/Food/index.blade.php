@@ -37,7 +37,7 @@
                 @if ($producto->estado == 1)
                     <div class="product">
                         <div class="image">
-                            {{-- <img class="imgt" src="{{ $producto->getImageUrl() }}" alt=""> --}}
+                       <!--     {{-- <img class="imgt" src="{{ $producto->getImageUrl() }}" alt=""> --}}-->
                         </div>
                         <div class="namePrice">
                             <h3>{{ $producto->nombre }}</h3>
@@ -47,7 +47,7 @@
                         @auth
                             <form method="POST" action="{{ route('carrito.agregar') }}">
                                 @csrf
-                                <input type="hidden" name="id_producto" value="{{ $producto->getIdProducto() }}">
+                                <input type="hidden" name="id_producto" value="{{ $producto->id_producto }}">
                                 <div class="bay">
                                     <div style="display: flex; align-items: center;">
                                         <div class="stars">

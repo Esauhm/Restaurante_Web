@@ -30,4 +30,20 @@ class FoodController extends Controller
 
         return view('food.index', $data);
     }
+
+    public function promociones(Request $request)
+    {
+            $productos = Producto::listarProductos();
+       
+
+    
+
+        $data = [
+            'productos' => $productos
+        ];
+
+        session(['productovista' => 'normal']);
+
+        return view('food.promociones', $data);
+    }
 }

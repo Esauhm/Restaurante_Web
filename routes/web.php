@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/promociones', function () {
-    return view('index');
-});
+/*
+Route::get('/home', function () {
+    return view('promociones');
+});*/
 
 Route::middleware([
     'auth:sanctum',
@@ -81,7 +82,7 @@ Route::prefix('roles')->group(function () {
 });
 
 
-
+/*
 Route::prefix('productos')->group(function () {
     Route::get('/', [ProductoController::class, 'index'])->name('productos.index');
     Route::get('/create', [ProductoController::class, 'create'])->name('productos.create');
@@ -92,6 +93,11 @@ Route::prefix('productos')->group(function () {
     Route::delete('/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });
 
+
+*/
+
+//Ruta para cargar la vista de nosotros
+Route::view('/promociones', 'FoodController@promociones')->name('food.promociones');
 
 //Ruta para cargar la vista de nosotros
 Route::view('/nosotros', 'home.nosotros')->name('nosotros');

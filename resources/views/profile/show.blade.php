@@ -8,8 +8,13 @@
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                @livewire('profile.update-profile-information-form')
-
+                <div class="mb-4">
+                    <p>Name: {{ auth()->user()->name }}</p>
+                    <p>Email: {{ auth()->user()->email }}</p>
+                </div>
+                <a href="{{ route('profile.edit') }}" class="text-blue-500 hover:underline">
+                    Edit Profile
+                </a>
                 <x-section-border />
             @endif
 
@@ -17,7 +22,6 @@
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.update-password-form')
                 </div>
-
                 <x-section-border />
             @endif
 
@@ -25,7 +29,6 @@
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.two-factor-authentication-form')
                 </div>
-
                 <x-section-border />
             @endif
 
@@ -35,7 +38,6 @@
 
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
                 <x-section-border />
-
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.delete-user-form')
                 </div>
