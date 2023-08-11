@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/promociones', function () {
-    return view('index');
-});
+
 
 Route::middleware([
     'auth:sanctum',
@@ -81,7 +79,7 @@ Route::prefix('roles')->group(function () {
 });
 
 
-
+/*
 Route::prefix('productos')->group(function () {
     Route::get('/', [ProductoController::class, 'index'])->name('productos.index');
     Route::get('/create', [ProductoController::class, 'create'])->name('productos.create');
@@ -91,6 +89,9 @@ Route::prefix('productos')->group(function () {
     Route::put('/{producto}', [ProductoController::class, 'update'])->name('productos.update');
     Route::delete('/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });
+
+
+*/
 
 
 //Ruta para cargar la vista de nosotros

@@ -10,7 +10,7 @@
         <!-- Código para agregar al carrito -->
     @else
         <div class="text-center alert alert-info" role="alert">
-             <h5>Debes iniciar sesión para agregar las promociones.</h5>
+            <h5>Debes iniciar sesión para agregar las promociones.</h5>
         </div>
     @endif
 
@@ -20,7 +20,7 @@
                 @if($producto->estado == 1)
                     <div class="product">
                         <div class="image">
-                            {{-- <img class="imgt" src="{{ $producto->getImageUrl() }}" alt=""> --}}
+                            <!--{{-- <img class="imgt" src="{{ $producto->image_url }}" alt=""> --}}-->
                         </div>
                         <div class="namePrice">
                             <h3>{{ $producto->nombre }}</h3>

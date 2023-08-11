@@ -46,7 +46,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <p>{{ auth()->user()->name }}</p>
-                                            <a class="dropdown-item" href="Usuario/perfil">
+                                            <a class="dropdown-item"  href="{{ route('profile.show') }}">
                                                 <i class="fas fa-user"></i> Mi perfil
                                             </a>
                                             <a class="dropdown-item" href="Usuario/pedido">
