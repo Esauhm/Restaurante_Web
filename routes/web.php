@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/promociones', function () {
+    return view('index');
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -65,6 +68,17 @@ Route::prefix('categorias')->group(function () {
     Route::delete('/{categoria}', [CategoriaController::class, 'destroy'])->name('categoria.destroy');
 });
 
+
+
+Route::prefix('roles')->group(function () {
+    Route::get('/', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/{role}', [RoleController::class, 'show'])->name('roles.show');
+    Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+});
 
 
 

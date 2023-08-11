@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg bg-light navbar-fixed">
 
     <div class="container">
@@ -32,57 +31,57 @@
                     <li>
                         <a class="nav-link" href="Home/promociones">Promociones</a>
 
-                  
-                    @if (Route::has('login'))
-                    <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                        @auth
-                       <div class="collapse navbar-collapse" id="navbarScroll">
-                            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                                style="--bs-scroll-height: 100px;">
 
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <i class="fa-regular fa-user"></i> <span></span> Usuario
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                     <p>{{ auth()->user()->name }}</p>
-                                        <a class="dropdown-item" href="Usuario/perfil">
-                                            <i class="fas fa-user"></i> Mi perfil
+                        @if (Route::has('login'))
+                        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                            @auth
+                            <div class="collapse navbar-collapse" id="navbarScroll">
+                                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                                    style="--bs-scroll-height: 100px;">
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-regular fa-user"></i> <span></span> Usuario
                                         </a>
-                                        <a class="dropdown-item" href="Usuario/pedido">
-                                            <i class="fas fa-clipboard-list"></i> Mis pedidos
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="Auth/logout">      
-                                                                                 
-                                            <a href="{{ route('logout') }}"
-                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                {{ __('Cerrar sesion') }}  <i class="fa-solid fa-sign-out"></i>
+                                        <ul class="dropdown-menu">
+                                            <p>{{ auth()->user()->name }}</p>
+                                            <a class="dropdown-item" href="Usuario/perfil">
+                                                <i class="fas fa-user"></i> Mi perfil
                                             </a>
+                                            <a class="dropdown-item" href="Usuario/pedido">
+                                                <i class="fas fa-clipboard-list"></i> Mis pedidos
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Auth/logout">
 
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </a>
-                                    </ul>
-                                </li>
+                                                <a href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    {{ __('Cerrar sesion') }} <i class="fa-solid fa-sign-out"></i>
+                                                </a>
 
-                            </ul>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </a>
+                                        </ul>
+                                    </li>
 
+                                </ul>
+
+                            </div>
+
+                            @else
+                            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+
+                            @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                            @endif
+                            @endauth
                         </div>
 
-                        @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
                         @endif
-                        @endauth
-                    </div>
-
-                    @endif
                 </ul>
             </div>
         </div>
