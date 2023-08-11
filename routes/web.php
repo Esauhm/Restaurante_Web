@@ -18,10 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-/*
-Route::get('/home', function () {
-    return view('promociones');
-});*/
+
 
 Route::middleware([
     'auth:sanctum',
@@ -96,8 +93,6 @@ Route::prefix('productos')->group(function () {
 
 */
 
-//Ruta para cargar la vista de nosotros
-Route::view('/promociones', 'FoodController@promociones')->name('food.promociones');
 
 //Ruta para cargar la vista de nosotros
 Route::view('/nosotros', 'home.nosotros')->name('nosotros');
