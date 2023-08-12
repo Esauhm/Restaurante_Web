@@ -26,7 +26,7 @@
 
 
     @auth
-            @if (auth()->user()->Rol == 1)
+            @if (auth()->user()->rol == 1)
                 @include('layouts.navadmin')
                     @php
                         dd("1");
