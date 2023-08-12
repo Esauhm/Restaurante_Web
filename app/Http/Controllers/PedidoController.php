@@ -18,12 +18,12 @@ use App\Http\Controllers\Controller;
 
         // Crear un nuevo Pedido
         $pedido = new Pedido();
-        $pedido->setTotalPagar($request->input('total_pagar'));
-        $pedido->setFechaPedido(now());
-        $pedido->setIdUsuario(auth()->user()->id);
-        $pedido->setIdEstadoPedido($request->input('id_estado_pedido'));
-        $pedido->setUbicacion($request->input('direccion_envio'));
-        $pedido->guardar();
+        $pedido->total_pagar = $request->input('total_pagar');
+        $pedido->fecha_pedido = now();
+        $pedido->id_usuario = auth()->user()->id;
+        $pedido->id_estado_pedido = $request->input('id_estado_pedido');
+        $pedido->ubicacion = $request->input('direccion_envio');
+        $pedido->save();
 
         // Crear los detalles de pedido para cada producto en el carrito
         foreach ($carrito as $item) {

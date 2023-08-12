@@ -22,9 +22,27 @@
 </head>
 
 <body>
-    @if (Route::has('login'))
-    @include('layouts.nav')
-    @endif
+ 
+
+
+    @auth
+            @if (auth()->user()->Rol == 1)
+                @include('layouts.navadmin')
+                    @php
+                        dd("1");
+                    @endphp
+            @else
+            @include('layouts.nav')
+                @php
+                    dd("2");
+                @endphp
+            @endif
+    @endauth
+
+        @guest
+            @include('layouts.nav')
+        @endguest
+
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
