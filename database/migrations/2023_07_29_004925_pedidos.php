@@ -26,7 +26,7 @@ return new class extends Migration
         });
         Schema::table('pedidos', function (Blueprint $table) {
             $table->foreign('id_estado_pedido')->references('id_estado_pedido')->on('estado_pedidos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

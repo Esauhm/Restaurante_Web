@@ -33,7 +33,7 @@
 
              </ul>
              <ul class="navbar-nav ms-auto">
-                @if (Route::has('login'))
+                @if (Route::has('login'))  
                 <li class="ms-auto">
                     <div class="hidden fixed ">
                         @auth

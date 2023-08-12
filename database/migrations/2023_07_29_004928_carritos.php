@@ -19,7 +19,11 @@ return new class extends Migration
             $table->double('total_pagar');
             $table->timestamps();
 
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade');
+           
+        });
+        Schema::table('carritos', function (Blueprint $table) {
+            // Agrega la restricción de clave foránea con la tabla users
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
