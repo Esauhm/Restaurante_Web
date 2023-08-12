@@ -126,7 +126,7 @@ Route::post('/pago/pagar', [PagoController::class, 'pagar'])->name('pago.pagar')
 
 Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedido'])->name('pedido.procesarPedido');
 
-Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedido'])->name('pedido.procesarPedido');
+Route::get('/pedido/procesarPedido', [PedidoController::class, 'procesarPedido'])->name('pedido.procesarPedido');
 
 
 

@@ -9,7 +9,7 @@
     @php
         session()->forget(['error_pedido', 'success_pedido']);
     @endphp
-    <form action="{{ route('pedido.procesarPedido') }}" method="POST">
+    <form action="{{ route('pedido.procesarPedido') }}" >
 
         <div class="d-flex flex-row justify-content-between align-items-start">
             <div class="flex-fill mr-3">
