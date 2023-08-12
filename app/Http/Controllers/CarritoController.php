@@ -90,7 +90,7 @@ class CarritoController extends Controller
         }
 
         // Redirigir al carrito
-        return redirect()->route('carrito.ver');
+        return redirect()->route('home.carrito');
     }
 }
 

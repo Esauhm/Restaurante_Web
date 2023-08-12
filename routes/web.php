@@ -117,10 +117,16 @@ Route::post('/carrito/eliminar-producto', 'CarritoController@eliminarProducto')-
 
 Route::post('/pago/pagar', 'CarritoController@procesarPago')->name('pago.pagar');
 
+Route::post('/carrito/eliminarProducto', [CarritoController::class, 'eliminarProducto'])->name('carrito.eliminarProducto');
 
 
+Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedido'])->name('pago.efectivo');
 
+Route::post('/pago/pagar', [PagoController::class, 'pagar'])->name('pago.pagar');
 
+Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedido'])->name('pedido.procesarPedido');
+
+Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedido'])->name('pedido.procesarPedido');
 
 
 
