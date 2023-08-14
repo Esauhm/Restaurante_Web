@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
 <nav class="navbar navbar-expand-lg bg-light mb-3 navbar-fixed">
     <div class="container">
         <a class="navbar-brand">Administrador</a>
@@ -20,7 +17,7 @@
             <div class="offcanvas-body justify-content-between">
                 <ul class="navbar-nav align-middle">
 
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.register') }}">Registrar</a></li>
+                    {{-- <li class="nav-item"><a class="nav-link" href="{{ route('admin.register') }}">Registrar</a></li> --}}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="promocionesDropdown" role="button"
@@ -29,7 +26,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="promocionesDropdown">
 
-                            <li><a class="dropdown-item" href="{{ route('admin.promocionesA') }}">Agregar promoción</a></li>
+                            {{-- <li><a class="dropdown-item" href="{{ route('admin.promocionesA') }}">Agregar promoción</a></li> --}}
 
                         </ul>
                     </li>
@@ -40,9 +37,9 @@
                             Productos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="productosDropdown">
-                            <li><a class="dropdown-item" href="{{ route('food.index') }}">Ver productos</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.productoA') }}">Agregar producto</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.productoE') }}">Editar producto</a></li>
+                            {{-- <li><a class="dropdown-item" href="{{ route('food.index') }}">Ver productos</a></li> --}}
+                            {{-- <li><a class="dropdown-item" href="{{ route('admin.productoA') }}">Agregar producto</a></li> --}}
+                            {{-- <li><a class="dropdown-item" href="{{ route('admin.productoE') }}">Editar producto</a></li> --}}
                         </ul>
                     </li>
 
@@ -52,37 +49,50 @@
                             Categorias
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
-                            <li><a class="dropdown-item" href="{{ route('admin.acategoria') }}">Agregar categoria</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.ecategoria') }}">Editar categoria</a></li>
+                            {{-- <li><a class="dropdown-item" href="{{ route('admin.acategoria') }}">Agregar categoria</a></li> --}}
+                            {{-- <li><a class="dropdown-item" href="{{ route('admin.ecategoria') }}">Editar categoria</a></li> --}}
                         </ul>
                     </li>
 
                     <li>
-                        <ul class="navbar-nav align-middle">
-                            <li class="nav-item dropdown d-block d-lg-none">
-                                <a class="nav-link dropdown-toggle" href="#" id="mobileDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-regular fa-user"></i> <span></span> Usuario
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="mobileDropdown">
-                                    <a class="dropdown-item" href="{{ URL }}Usuario/perfil">
-                                        <i class="fas fa-user"></i> Mi perfil
+                        <div class="collapse navbar-collapse" id="navbarScroll">
+                            <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-regular fa-user"></i> <span>{{ auth()->user()->name }}</span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ URL }}Usuario/pedido ">
-                                        <i class="fas fa-clipboard-list"></i> Mis pedidos
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ URL }}Auth/logout">
-                                        <i class="fa-solid fa-sign-out"></i> Cerrar sesión
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li class="dropdown-item">
+                                            <a class="dropdown-link" href="{{ route('profile.show') }}">
+                                                <i class="fas fa-user"></i> Mi perfil
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a class="dropdown-link" href="Usuario/pedido">
+                                                <i class="fas fa-clipboard-list"></i> Mis pedidos
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                {{ __('Cerrar sesión') }} <i class="fa-solid fa-sign-out"></i>
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
-                @include('layouts.iniciada')
             </div>
         </div>
     </div>
 </nav>
-@endsection
+
+
