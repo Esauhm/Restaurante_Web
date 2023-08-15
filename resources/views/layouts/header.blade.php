@@ -28,14 +28,10 @@
     @auth
             @if (auth()->user()->rol == 1)
                 @include('layouts.navadmin')
-                    @php
-                        dd("1");
-                    @endphp
+
             @else
             @include('layouts.nav')
-                @php
-                    dd("2");
-                @endphp
+
             @endif
     @endauth
 

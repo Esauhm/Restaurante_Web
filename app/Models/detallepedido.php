@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 class DetallePedido extends Model
 {
-    protected $table = 'detalle_pedido'; // Nombre de la tabla en la base de datos
+    protected $table = 'detalle_pedidos'; // Nombre de la tabla en la base de datos
     public $timestamps = false; // Desactivar las columnas de timestamps (created_at y updated_at)
 
     protected $fillable = [
@@ -22,7 +23,7 @@ class DetallePedido extends Model
     public function guardarDetallePedido()
     {
         try {
-            DB::table('detalle_pedido')->insert([
+            DB::table('detalle_pedidos')->insert([
                 'id_producto' => $this->idProducto,
                 'id_pedido' => $this->idPedido,
                 'cantidad' => $this->cantidad,
@@ -39,10 +40,10 @@ class DetallePedido extends Model
     public function obtenerDetallesPedido($idPedido)
     {
         try {
-            $detallesPedido = DB::table('detalle_pedido')
-                ->join('producto', 'detalle_pedido.id_producto', '=', 'producto.id_producto')
-                ->select('detalle_pedido.cantidad', 'producto.nombre', 'producto.precio')
-                ->where('detalle_pedido.id_pedido', $idPedido)
+            $detallesPedido = DB::table('detalle_pedidos')
+                ->join('productos', 'detalle_pedidos.id_producto', '=', 'productos.id_producto')
+                ->select('detalle_pedidos.cantidad', 'productos.nombre', 'productos.precio')
+                ->where('detalle_pedidos.id_pedido', $idPedido)
                 ->get();
 
             return $detallesPedido;

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pedido extends Model
 {
@@ -45,8 +46,8 @@ class Pedido extends Model
             }
 
             $query = DB::table('pedidos')
-                ->join('usuarios', 'pedidos.id_usuario', '=', 'usuarios.id_usuario')
-                ->join('estado_pedido', 'pedidos.id_estado_pedido', '=', 'estado_pedido.id_estado_pedido')
+                ->join('users', 'pedidos.id_usuario', '=', 'users.id')
+                ->join('estado_pedidos', 'pedidos.id_estado_pedido', '=', 'estado_pedidos.id_estado_pedido')
                 ->where('pedidos.fecha_pedido', $fecha);
 
             if ($estado !== null) {
@@ -78,8 +79,8 @@ class Pedido extends Model
     {
         try {
             $pedido = DB::table('pedidos')
-                ->join('usuarios', 'pedidos.id_usuario', '=', 'usuarios.id_usuario')
-                ->join('estado_pedido', 'pedidos.id_estado_pedido', '=', 'estado_pedido.id_estado_pedido')
+                ->join('users', 'pedidos.id_usuario', '=', 'users.id')
+                ->join('estado_pedidos', 'pedidos.id_estado_pedido', '=', 'estado_pedidos.id_estado_pedido')
                 ->where('pedidos.id_pedido', $idPedido)
                 ->first();
 
@@ -95,8 +96,8 @@ class Pedido extends Model
     {
         try {
             $query = DB::table('pedidos')
-                ->join('usuarios', 'pedidos.id_usuario', '=', 'usuarios.id_usuario')
-                ->join('estado_pedido', 'pedidos.id_estado_pedido', '=', 'estado_pedido.id_estado_pedido')
+                ->join('users', 'pedidos.id_usuario', '=', 'users.id')
+                ->join('estado_pedidos', 'pedidos.id_estado_pedido', '=', 'estado_pedidos.id_estado_pedido')
                 ->where(function ($query) use ($fecha, $estado, $id_usuario) {
                     if ($fecha !== null && $estado !== null && $fecha !== "" && $estado !== "") {
                         $query->where('pedidos.fecha_pedido', $fecha)
@@ -111,6 +112,7 @@ class Pedido extends Model
                 });
 
             $resultados = $query->get();
+
 
             return $resultados;
 

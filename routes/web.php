@@ -135,3 +135,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Otras rutas...
 });
+
+
+Route::post('/Usuario/Pedido', [AdminController::class, 'pedidos'])->name('usuario.pedidos');
+
+Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->name('admin.detallePedido');
