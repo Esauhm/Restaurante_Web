@@ -105,3 +105,9 @@ Route::post('/Usuario/Pedido', [AdminController::class, 'pedidos'])->name('usuar
 
 Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->name('admin.detallePedido');
 
+
+
+
+Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.tarjeta');
+
+Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');
