@@ -105,11 +105,3 @@ Route::post('/Usuario/Pedido', [AdminController::class, 'pedidos'])->name('usuar
 
 Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->name('admin.detallePedido');
 
-
-Route::post('/Usuario/Pedido', [AdminController::class, 'pedidos'])->name('usuario.pedidos');
-
-Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->name('admin.detallePedido');
-
-Route::get('/categorias/create', [AdminController::class, 'Addcategoria'])->name('categorias.create');
-
-Route::get('/categorias/editar', [AdminController::class, 'EditCategorias'])->name('categorias.editar');
