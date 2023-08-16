@@ -110,3 +110,15 @@ Route::get('/categorias/create', [AdminController::class, 'Addcategoria'])->name
 Route::get('/categorias/editar', [AdminController::class, 'EditCategorias'])->name('categorias.editar');
 
 Route::post('Admin/cambiarEstadoCategoria', 'Admincontroller@cambiarEstadoCategoria')->name('cambiarEstado');
+
+
+
+Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.tarjeta');
+
+Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');
+
+
+
+Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.tarjeta');
+
+Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');
