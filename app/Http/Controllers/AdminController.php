@@ -28,7 +28,19 @@ namespace App\Http\Controllers;
             return view('Usuario.Pedido', ['pedidos' => $pedidos]);
         }    
 
-
+        public function Addcategoria()
+        {
+            return view('Categorias.create');
+        }
+        
+        public function EditCategorias()
+        {   
+           /* $categoria = new Categoria();
+    
+            $categorias = $categoria->listarCategorias();*/
+    
+            return view('Categorias.editar');
+        }
     }
 
     
