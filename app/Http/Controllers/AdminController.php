@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
     use App\Models\Producto;
     use App\Models\pedido;
+    use App\Models\Categoria;
     use App\Models\detallepedido;
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
@@ -35,12 +36,44 @@ namespace App\Http\Controllers;
         
         public function EditCategorias()
         {   
-           /* $categoria = new Categoria();
+            $categoria = new Categoria();
+            $categorias = $categoria->listarCategorias();
     
-            $categorias = $categoria->listarCategorias();*/
-            return Categoria::all();
-            return view('Categorias.editar');
+            return view('Categorias.editar', ['categorias' => $categorias]);
         }
+        
+        public function cambiarEstadoCategoria(Request $request) {
+            $id_categoria = $request->input('id_categoria');
+            $estado_actual = $request->input('estado');
+            $nuevo_estado = ($estado_actual == 1) ? 2 : 1;
+        
+            // Llama al método actualizarEstado del modelo Categoria
+            $categoria = new Categoria();
+            $categoria->actualizarEstado($id_categoria, $nuevo_estado);
+        
+            // Redirige al listado de categorías
+            return redirect()->route('listaCategorias'); // Ajusta la ruta según tu estructura
+        }
+
+        function mostrarEstadoCategoria(Categoria $categoria) {
+            $estado = $categoria->getEstado();
+            $id_categoria = $categoria->getIdCategoria();
+            $buttonText = ($estado == 1) ? 'Disponible' : 'No Disponible';
+            $buttonClass = ($estado == 1) ? 'btn-success' : 'btn-danger';
+            
+            $html = '
+                <form method="post" action="'.route("cambiarEstado").'">
+                    @csrf
+                    <input type="hidden" name="id_categoria" value="'.$id_categoria.'">
+                    <input type="hidden" name="estado" value="'.($estado == 1 ? 2 : 1).'">
+                    <button type="submit" class="btn '.$buttonClass.'">'.$buttonText.'</button>
+                </form>
+            ';
+            
+            return $html;
+        }
+
+     
     }
 
     
