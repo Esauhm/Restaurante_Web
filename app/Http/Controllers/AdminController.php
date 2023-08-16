@@ -38,7 +38,7 @@ namespace App\Http\Controllers;
            /* $categoria = new Categoria();
     
             $categorias = $categoria->listarCategorias();*/
-    
+            return Categoria::all();
             return view('Categorias.editar');
         }
     }
