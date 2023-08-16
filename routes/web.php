@@ -43,29 +43,6 @@ Route::middleware([
 });
 
 
-Route::prefix('categorias')->group(function () {
-    // Ruta para mostrar todos los registros (Index)
-    Route::get('/', [CategoriaController::class, 'index'])->name('categoria.index');
-
-    // Ruta para mostrar el formulario de creación (Create)
-    Route::get('/create', [CategoriaController::class, 'create'])->name('categoria.create');
-
-    // Ruta para almacenar un nuevo registro en la base de datos (Store)
-    Route::post('/', [CategoriaController::class, 'store'])->name('categoria.store');
-
-    // Ruta para mostrar un registro específico (Show)
-    Route::get('/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
-
-    // Ruta para mostrar el formulario de edición de un registro (Edit)
-    Route::get('/{categoria}/edit', [CategoriaController::class, 'edit'])->name('categoria.edit');
-
-    // Ruta para actualizar un registro específico en la base de datos (Update)
-    Route::put('/{categoria}', [CategoriaController::class, 'update'])->name('categoria.update');
-
-    // Ruta para eliminar un registro específico de la base de datos (Delete)
-    Route::delete('/{categoria}', [CategoriaController::class, 'destroy'])->name('categoria.destroy');
-});
-
 
 
 Route::prefix('roles')->group(function () {
@@ -79,27 +56,14 @@ Route::prefix('roles')->group(function () {
 });
 
 
-/*
-Route::prefix('productos')->group(function () {
-    Route::get('/', [ProductoController::class, 'index'])->name('productos.index');
-    Route::get('/create', [ProductoController::class, 'create'])->name('productos.create');
-    Route::post('/', [ProductoController::class, 'store'])->name('productos.store');
-    Route::get('/{producto}', [ProductoController::class, 'show'])->name('productos.show');
-    Route::get('/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
-    Route::put('/{producto}', [ProductoController::class, 'update'])->name('productos.update');
-    Route::delete('/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
-});
-
-
-*/
-
 
 //Ruta para cargar la vista de nosotros
 Route::view('/nosotros', 'home.nosotros')->name('nosotros');
 
-//Mostrar la vista de productos
+
 
 Route::get('/productos', [FoodController::class, 'index'])->name('food.index');
+
 
 Route::get('/promociones', [HomeController::class, 'promociones'])->name('home.promociones');
 
@@ -140,3 +104,12 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/Usuario/Pedido', [AdminController::class, 'pedidos'])->name('usuario.pedidos');
 
 Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->name('admin.detallePedido');
+
+
+Route::post('/Usuario/Pedido', [AdminController::class, 'pedidos'])->name('usuario.pedidos');
+
+Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->name('admin.detallePedido');
+
+Route::get('/categorias/create', [AdminController::class, 'Addcategoria'])->name('categorias.create');
+
+Route::get('/categorias/editar', [AdminController::class, 'EditCategorias'])->name('categorias.editar');

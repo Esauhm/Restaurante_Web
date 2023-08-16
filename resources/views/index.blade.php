@@ -1,6 +1,6 @@
 
 <!-- INSERTAR CONTENIDO -->
-<link rel="stylesheet" href="resources/css/index.css">
+<!--<link rel="stylesheet" href="/resources/css/index.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
 

@@ -17,7 +17,10 @@
             <div class="offcanvas-body justify-content-between">
                 <ul class="navbar-nav align-middle">
 
-                    {{-- <li class="nav-item"><a class="nav-link" href="{{ route('admin.register') }}">Registrar</a></li> --}}
+     
+                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrar</a></li> 
+
+               
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="promocionesDropdown" role="button"
@@ -49,8 +52,8 @@
                             Categorias
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
-                            {{-- <li><a class="dropdown-item" href="{{ route('admin.acategoria') }}">Agregar categoria</a></li> --}}
-                            {{-- <li><a class="dropdown-item" href="{{ route('admin.ecategoria') }}">Editar categoria</a></li> --}}
+                             <li><a class="dropdown-item" href="{{ route('categorias.create') }}">Agregar categoria</a></li>
+                            <li><a class="dropdown-item" href="{{ route('categorias.editar') }}">Editar categoria</a></li> 
                         </ul>
                     </li>
 

@@ -27,14 +27,19 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        // Obtener el ID del rol por defecto o el que necesites asignar
-        $defaultRoleId = Role::where('rol', '1')->value('id_rol');
+       // Obtener el ID del rol por defecto o el que necesites asignar
+       $roleId = isset($input['rol']) ? $input['rol'] : 2;
+       
+     
 
-        return User::create([
+     
+  return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'rol' => 1, // O cualquier otro valor válido de rol
+            'rol' => $roleId,
         ]);
+      
+    
     }
 }
