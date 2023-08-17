@@ -19,7 +19,7 @@ class PagoController extends Controller
             if ($opcion_pago == 'tarjeta') {
                 $carrito = session('carrito', []);
 
-                return view('pago.tarjeta', compact('carrito'));
+                return view('pago.index', compact('carrito'));
             }
 
             // Si la opción de pago es efectivo, redirigir a la vista para realizar el pago en efectivo

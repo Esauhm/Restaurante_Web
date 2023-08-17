@@ -79,19 +79,19 @@ namespace App\Http\Controllers;
 
                 if (empty($nombreTitular) || !preg_match('/^[a-zA-Z ]+$/', $nombreTitular)) {
                     $_SESSION['error_pedido'] = 'Ingrese un nombre válido para el titular de la tarjeta';
-                    $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                    $this->renderView("pago/index", array('carrito' => $carrito));
                     exit();
                 }
             
                 if (empty($numTarjeta) || !preg_match('/^\d{16}$/', $numTarjeta)) {
                     $_SESSION['error_pedido'] = 'Ingrese un número de tarjeta de crédito válido';
-                    $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                    $this->renderView("pago/index", array('carrito' => $carrito));
                     exit();
                 }
             
                 if (empty($fechaVencimiento) || !preg_match('/^(0[1-9]|1[0-2])\/([0-9]{2})$/', $fechaVencimiento)) {
                     $_SESSION['error_pedido'] = 'Ingrese una fecha de vencimiento válida (MM/AA)';
-                    $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                    $this->renderView("pago/index", array('carrito' => $carrito));
                     exit();
                 } else {
                     $mes = substr($fechaVencimiento, 0, 2);
@@ -100,20 +100,20 @@ namespace App\Http\Controllers;
                     $fechaIngresada = new DateTime($anio . '-' . $mes . '-01');
                     if ($fechaIngresada < $fechaActual) {
                         $_SESSION['error_pedido'] = 'Ingrese una fecha de vencimiento válida (mayor a la actual)';
-                        $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                        $this->renderView("pago/index", array('carrito' => $carrito));
                         exit();
                     }
                 }
             
                 if (empty($cvv) || !preg_match('/^\d{3,4}$/', $cvv)) {
                     $_SESSION['error_pedido'] = 'Ingrese un código de seguridad (CVV) válido';
-                    $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                    $this->renderView("pago/index", array('carrito' => $carrito));
                     exit();
                 }
             
                 if (empty($ubicacion)) {
                     $_SESSION['error_pedido'] = 'Ingrese una dirección de envío válida';
-                    $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                    $this->renderView("pago/index", array('carrito' => $carrito));
                     exit();
                 }
                 
@@ -138,7 +138,7 @@ namespace App\Http\Controllers;
                   // Redirigir al home y vaciar el carrito
                   if ($pedido->getIdPedido() === null) {
                     $_SESSION['error_pedido'] = 'No se pudo procesar el pedido, por favor inténtelo de nuevo.';
-                    $this->renderView("pago/tarjeta", array('carrito' => $carrito));
+                    $this->renderView("pago/index", array('carrito' => $carrito));
                 } else {
                         $_SESSION['carrito'] = array();
                         $_SESSION['success_pedido'] = '¡El pedido se ha creado exitosamente!';

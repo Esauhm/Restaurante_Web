@@ -113,12 +113,7 @@ Route::post('Admin/cambiarEstadoCategoria', 'Admincontroller@cambiarEstadoCatego
 
 
 
-Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.tarjeta');
+Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.index');
 
 Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');
 
-
-
-Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.tarjeta');
-
-Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');

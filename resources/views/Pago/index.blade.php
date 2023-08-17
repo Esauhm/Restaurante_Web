@@ -726,17 +726,15 @@ body {
                       class="card-item__numberItem"
                       v-if="$index > 4 && $index < 14 && cardNumber.length > $index && n.trim() !== ''"
                     >*</div>
-                    <div class="card-item__numberItem"
-                      :class="{ '-active' : n.trim() === '' }"
-                      :key="$index" v-else-if="cardNumber.length > $index">
-                      {{cardNumber[$index]}}
-                    </div>
+                    <div v-for="(digit, index) in cardNumber" :key="index">
+            {{ digit }}
+        </div>
                     <div
                       class="card-item__numberItem"
                       :class="{ '-active' : n.trim() === '' }"
                       v-else
                       :key="$index + 1"
-                    >{{n}}</div>
+                    >@{{n}}</div>
                   </transition>
                 </span>
                 </template>
