@@ -1,633 +1,299 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+
 <style>
-@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700|Source+Sans+Pro:400,600,700&display=swap");
+  * {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
 body {
-  background: #180148;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 16px;
+	background: #ddeefc;
+	font-family: 'Lato', sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-*:focus {
-  outline: none;
-}
-
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  padding: 50px 15px;
-}
-@media screen and (max-width: 700px), (max-height: 500px) {
-  .wrapper {
-    flex-wrap: wrap;
-    flex-direction: column;
-  }
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	padding: 40px 20px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.card-form {
-  max-width: 570px;
-  margin: auto;
-  width: 100%;
-}
-@media screen and (max-width: 576px) {
-  .card-form {
-    margin: 0 auto;
-  }
-}
-.card-form__inner {
-  background: #fff;
-  box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
-  border-radius: 10px;
-  padding: 35px;
-  padding-top: 180px;
-}
-@media screen and (max-width: 480px) {
-  .card-form__inner {
-    padding: 25px;
-    padding-top: 165px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-form__inner {
-    padding: 15px;
-    padding-top: 165px;
-  }
-}
-.card-form__row {
-  display: flex;
-  align-items: flex-start;
-}
-@media screen and (max-width: 480px) {
-  .card-form__row {
-    flex-wrap: wrap;
-  }
-}
-.card-form__col {
-  flex: auto;
-  margin-right: 35px;
-}
-.card-form__col:last-child {
-  margin-right: 0;
-}
-@media screen and (max-width: 480px) {
-  .card-form__col {
-    margin-right: 0;
-    flex: unset;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  .card-form__col:last-child {
-    margin-bottom: 0;
-  }
-}
-.card-form__col.-cvv {
-  max-width: 150px;
-}
-@media screen and (max-width: 480px) {
-  .card-form__col.-cvv {
-    max-width: initial;
-  }
-}
-.card-form__group {
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-.card-form__group .card-input__input {
-  flex: 1;
-  margin-right: 15px;
-}
-.card-form__group .card-input__input:last-child {
-  margin-right: 0;
-}
-.card-form__button {
-  width: 100%;
-  height: 55px;
-  background: #2364d2;
-  border: none;
-  border-radius: 5px;
-  font-size: 22px;
-  font-weight: 500;
-  font-family: "Source Sans Pro", sans-serif;
-  box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
-  color: #fff;
-  margin-top: 20px;
-  cursor: pointer;
-}
-@media screen and (max-width: 480px) {
-  .card-form__button {
-    margin-top: 10px;
-  }
+/* ---------- Estilos Generales de las Tarjetas ----------*/
+.tarjeta {
+	width: 100%;
+	max-width: 550px;
+	position: relative;
+	color: #fff;
+	transition: .3s ease all;
+	transform: rotateY(0deg);
+	transform-style: preserve-3d;
+	cursor: pointer;
+	z-index: 2;
 }
 
-.card-item {
-  max-width: 430px;
-  height: 270px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-}
-@media screen and (max-width: 480px) {
-  .card-item {
-    max-width: 310px;
-    height: 220px;
-    width: 90%;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item {
-    height: 180px;
-  }
-}
-.card-item.-active .card-item__side.-front {
-  transform: perspective(1000px) rotateY(180deg) rotateX(0deg) rotateZ(0deg);
-}
-.card-item.-active .card-item__side.-back {
-  transform: perspective(1000px) rotateY(0) rotateX(0deg) rotateZ(0deg);
-}
-.card-item__focus {
-  position: absolute;
-  z-index: 3;
-  border-radius: 5px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  transition: all 0.35s cubic-bezier(0.71, 0.03, 0.56, 0.85);
-  opacity: 0;
-  pointer-events: none;
-  overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.65);
-}
-.card-item__focus:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #08142f;
-  height: 100%;
-  border-radius: 5px;
-  filter: blur(25px);
-  opacity: 0.5;
-}
-.card-item__focus.-active {
-  opacity: 1;
-}
-.card-item__side {
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px 0 rgba(14, 42, 90, 0.55);
-  transform: perspective(2000px) rotateY(0deg) rotateX(0deg) rotate(0deg);
-  transform-style: preserve-3d;
-  transition: all 0.8s cubic-bezier(0.71, 0.03, 0.56, 0.85);
-  backface-visibility: hidden;
-  height: 100%;
-}
-.card-item__side.-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform: perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg);
-  z-index: 2;
-  padding: 0;
-  height: 100%;
-}
-.card-item__side.-back .card-item__cover {
-  transform: rotateY(-180deg);
-}
-.card-item__bg {
-  max-width: 100%;
-  display: block;
-  max-height: 100%;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-.card-item__cover {
-  height: 100%;
-  background-color: #1c1d27;
-  position: absolute;
-  height: 100%;
-  background-color: #1c1d27;
-  left: 0;
-  top: 0;
-  width: 100%;
-  border-radius: 15px;
-  overflow: hidden;
-}
-.card-item__cover:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(6, 2, 29, 0.45);
-}
-.card-item__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  padding: 0 10px;
-}
-@media screen and (max-width: 480px) {
-  .card-item__top {
-    margin-bottom: 25px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__top {
-    margin-bottom: 15px;
-  }
-}
-.card-item__chip {
-  width: 60px;
-}
-@media screen and (max-width: 480px) {
-  .card-item__chip {
-    width: 50px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__chip {
-    width: 40px;
-  }
-}
-.card-item__type {
-  height: 45px;
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  max-width: 100px;
-  margin-left: auto;
-  width: 100%;
-}
-@media screen and (max-width: 480px) {
-  .card-item__type {
-    height: 40px;
-    max-width: 90px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__type {
-    height: 30px;
-  }
-}
-.card-item__typeImg {
-  max-width: 100%;
-  object-fit: contain;
-  max-height: 100%;
-  object-position: top right;
-}
-.card-item__info {
-  color: #fff;
-  width: 100%;
-  max-width: calc(100% - 85px);
-  padding: 10px 15px;
-  font-weight: 500;
-  display: block;
-  cursor: pointer;
-}
-@media screen and (max-width: 480px) {
-  .card-item__info {
-    padding: 10px;
-  }
-}
-.card-item__holder {
-  opacity: 0.7;
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-@media screen and (max-width: 480px) {
-  .card-item__holder {
-    font-size: 12px;
-    margin-bottom: 5px;
-  }
-}
-.card-item__wrapper {
-  font-family: "Source Code Pro", monospace;
-  padding: 25px 15px;
-  position: relative;
-  z-index: 4;
-  height: 100%;
-  text-shadow: 7px 6px 10px rgba(14, 42, 90, 0.8);
-  user-select: none;
-}
-@media screen and (max-width: 480px) {
-  .card-item__wrapper {
-    padding: 20px 10px;
-  }
-}
-.card-item__name {
-  font-size: 18px;
-  line-height: 1;
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-}
-@media screen and (max-width: 480px) {
-  .card-item__name {
-    font-size: 16px;
-  }
-}
-.card-item__nameItem {
-  display: inline-block;
-  min-width: 8px;
-  position: relative;
-}
-.card-item__number {
-  font-weight: 500;
-  line-height: 1;
-  color: #fff;
-  font-size: 27px;
-  margin-bottom: 35px;
-  display: inline-block;
-  padding: 10px 15px;
-  cursor: pointer;
-}
-@media screen and (max-width: 480px) {
-  .card-item__number {
-    font-size: 21px;
-    margin-bottom: 15px;
-    padding: 10px 10px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__number {
-    font-size: 19px;
-    margin-bottom: 10px;
-    padding: 10px 10px;
-  }
-}
-.card-item__numberItem {
-  width: 16px;
-  display: inline-block;
-}
-.card-item__numberItem.-active {
-  width: 30px;
-}
-@media screen and (max-width: 480px) {
-  .card-item__numberItem {
-    width: 13px;
-  }
-  .card-item__numberItem.-active {
-    width: 16px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__numberItem {
-    width: 12px;
-  }
-  .card-item__numberItem.-active {
-    width: 8px;
-  }
-}
-.card-item__content {
-  color: #fff;
-  display: flex;
-  align-items: flex-start;
-}
-.card-item__date {
-  flex-wrap: wrap;
-  font-size: 18px;
-  margin-left: auto;
-  padding: 10px;
-  display: inline-flex;
-  width: 80px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-@media screen and (max-width: 480px) {
-  .card-item__date {
-    font-size: 16px;
-  }
-}
-.card-item__dateItem {
-  position: relative;
-}
-.card-item__dateItem span {
-  width: 22px;
-  display: inline-block;
-}
-.card-item__dateTitle {
-  opacity: 0.7;
-  font-size: 13px;
-  padding-bottom: 6px;
-  width: 100%;
-}
-@media screen and (max-width: 480px) {
-  .card-item__dateTitle {
-    font-size: 12px;
-    padding-bottom: 5px;
-  }
-}
-.card-item__band {
-  background: rgba(0, 0, 19, 0.8);
-  width: 100%;
-  height: 50px;
-  margin-top: 30px;
-  position: relative;
-  z-index: 2;
-}
-@media screen and (max-width: 480px) {
-  .card-item__band {
-    margin-top: 20px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__band {
-    height: 40px;
-    margin-top: 10px;
-  }
-}
-.card-item__cvv {
-  text-align: right;
-  position: relative;
-  z-index: 2;
-  padding: 15px;
-}
-.card-item__cvv .card-item__type {
-  opacity: 0.7;
-}
-@media screen and (max-width: 360px) {
-  .card-item__cvv {
-    padding: 10px 15px;
-  }
-}
-.card-item__cvvTitle {
-  padding-right: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  margin-bottom: 5px;
-}
-.card-item__cvvBand {
-  height: 45px;
-  background: #fff;
-  margin-bottom: 30px;
-  text-align: right;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 10px;
-  color: #1a3b5d;
-  font-size: 18px;
-  border-radius: 4px;
-  box-shadow: 0px 10px 20px -7px rgba(32, 56, 117, 0.35);
-}
-@media screen and (max-width: 480px) {
-  .card-item__cvvBand {
-    height: 40px;
-    margin-bottom: 20px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .card-item__cvvBand {
-    margin-bottom: 15px;
-  }
+.tarjeta.active {
+	transform: rotateY(180deg);
 }
 
-.card-list {
-  margin-bottom: -130px;
-}
-@media screen and (max-width: 480px) {
-  .card-list {
-    margin-bottom: -120px;
-  }
-}
-
-.card-input {
-  margin-bottom: 20px;
-}
-.card-input__label {
-  font-size: 14px;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #1a3b5d;
-  width: 100%;
-  display: block;
-  user-select: none;
-}
-.card-input__input {
-  width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  box-shadow: none;
-  border: 1px solid #ced6e0;
-  transition: all 0.3s ease-in-out;
-  font-size: 18px;
-  padding: 5px 15px;
-  background: none;
-  color: #1a3b5d;
-  font-family: "Source Sans Pro", sans-serif;
-}
-.card-input__input:hover, .card-input__input:focus {
-  border-color: #3d9cff;
-}
-.card-input__input:focus {
-  box-shadow: 0px 10px 20px -13px rgba(32, 56, 117, 0.35);
-}
-.card-input__input.-select {
-  /* -webkit-appearance: none; */
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAeCAYAAABuUU38AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUxJREFUeNrM1sEJwkAQBdCsngXPHsQO9O5FS7AAMVYgdqAd2IGCDWgFnryLFQiCZ8EGnJUNimiyM/tnk4HNEAg/8y6ZmMRVqz9eUJvRaSbvutCZ347bXVJy/ZnvTmdJ862Me+hAbZCTs6GHpyUi1tTSvPnqTpoWZPUa7W7ncT3vK4h4zVejy8QzM3WhVUO8ykI6jOxoGA4ig3BLHcNFSCGqGAkig2yqgpEiMsjSfY9LxYQg7L6r0X6wS29YJiYQYecemY+wHrXD1+bklGhpAhBDeu/JfIVGxaAQ9sb8CI+CQSJ+QmJg0Ii/EE2MBiIXooHRQhRCkBhNhBcEhLkwf05ZCG8ICCOpk0MULmvDSY2M8UawIRExLIQIEgHDRoghihgRIgiigBEjgiFATBACAgFgghEwSAAGgoBCBBgYAg5hYKAIFYgHBo6w9RRgAFfy160QuV8NAAAAAElFTkSuQmCC");
-  background-size: 12px;
-  background-position: 90% center;
-  background-repeat: no-repeat;
-  padding-right: 30px;
+.tarjeta > div {
+	padding: 30px;
+	border-radius: 15px;
+	min-height: 315px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-shadow: 0 10px 10px 0 rgba(90,116,148,0.3);
 }
 
-.slide-fade-up-enter-active {
-  transition: all 0.25s ease-in-out;
-  transition-delay: 0.1s;
-  position: relative;
+/* ---------- Tarjeta Delantera ----------*/
+
+.tarjeta .delantera {
+	width: 100%;
+	background: url(../img/bg-tarjeta/bg-tarjeta-02.jpg);
+	background-size: cover;
 }
 
-.slide-fade-up-leave-active {
-  transition: all 0.25s ease-in-out;
-  position: absolute;
+.delantera .logo-marca {
+	text-align: right;
+	min-height: 50px;
 }
 
-.slide-fade-up-enter {
-  opacity: 0;
-  transform: translateY(15px);
-  pointer-events: none;
+.delantera .logo-marca img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	max-width: 80px;
 }
 
-.slide-fade-up-leave-to {
-  opacity: 0;
-  transform: translateY(-15px);
-  pointer-events: none;
+.delantera .chip {
+	width: 100%;
+	max-width: 50px;
+	margin-bottom: 20px;
 }
 
-.slide-fade-right-enter-active {
-  transition: all 0.25s ease-in-out;
-  transition-delay: 0.1s;
-  position: relative;
+.delantera .grupo .label {
+	font-size: 16px;
+	color: #7d8994;
+	margin-bottom: 5px;
 }
 
-.slide-fade-right-leave-active {
-  transition: all 0.25s ease-in-out;
-  position: absolute;
+.delantera .grupo .numero,
+.delantera .grupo .nombre,
+.delantera .grupo .expiracion {
+	color: #fff;
+	font-size: 22px;
+	text-transform: uppercase;
 }
 
-.slide-fade-right-enter {
-  opacity: 0;
-  transform: translateX(10px) rotate(45deg);
-  pointer-events: none;
+.delantera .flexbox {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
 }
 
-.slide-fade-right-leave-to {
-  opacity: 0;
-  transform: translateX(-10px) rotate(45deg);
-  pointer-events: none;
+/* ---------- Tarjeta Trasera ----------*/
+.trasera {
+	background: url(../img/bg-tarjeta/bg-tarjeta-02.jpg);
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	transform: rotateY(180deg);
+	backface-visibility: hidden;
 }
 
-.github-btn {
-  position: absolute;
-  right: 40px;
-  bottom: 50px;
-  text-decoration: none;
-  padding: 15px 25px;
-  border-radius: 4px;
-  box-shadow: 0px 4px 30px -6px rgba(36, 52, 70, 0.65);
-  background: #24292e;
-  color: #fff;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 16px;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
+.trasera .barra-magnetica {
+	height: 40px;
+	background: #000;
+	width: 100%;
+	position: absolute;
+	top: 30px;
+	left: 0;
 }
-@media screen and (min-width: 500px) {
-  .github-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
-  }
+
+.trasera .datos {
+	margin-top: 60px;
+	display: flex;
+	justify-content: space-between;
 }
-@media screen and (max-width: 700px) {
-  .github-btn {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    margin-top: 20px;
-  }
-  .github-btn:active {
-    transform: scale(1.1);
-    box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
-  }
+
+.trasera .datos p {
+	margin-bottom: 5px;
+}
+
+.trasera .datos #firma {
+	width: 70%;
+}
+
+.trasera .datos #firma .firma {
+	height: 40px;
+	background: repeating-linear-gradient(skyblue 0, skyblue 5px, orange 5px, orange 10px);
+}
+
+.trasera .datos #firma .firma p {
+	line-height: 40px;
+	font-family: 'Liu Jian Mao Cao', cursive;
+	color: #000;
+	font-size: 30px;
+	padding: 0 10px;
+	text-transform: capitalize;
+}
+
+.trasera .datos #ccv {
+	width: 20%;
+}
+
+.trasera .datos #ccv .ccv {
+	background: #fff;
+	height: 40px;
+	color: #000;
+	padding: 10px;
+	text-align: center;
+}
+
+.trasera .leyenda {
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.trasera .link-banco {
+	font-size: 14px;
+	color: #fff;
+}
+
+/* ---------- Contenedor Boton ----------*/
+.contenedor-btn .btn-abrir-formulario {
+	width: 50px;
+	height: 50px;
+	font-size: 20px;
+	line-height: 20px;
+	background: #2364d2;
+	color: #fff;
+	position: relative;
+	top: -25px;
+	z-index: 3;
+	border-radius: 100%;
+	box-shadow: -5px 4px 8px rgba(24,56,182,0.4);
+	padding: 5px;
+	transition: all .2s ease;
+	border: none;
+	cursor: pointer;
+}
+
+.contenedor-btn .btn-abrir-formulario:hover {
+	background: #1850b1;
+}
+
+.contenedor-btn .btn-abrir-formulario.active {
+	transform: rotate(45deg);
+}
+
+/* ---------- Formulario Tarjeta ----------*/
+.formulario-tarjeta {
+	background: #fff;
+	width: 100%;
+	max-width: 700px;
+	padding: 150px 30px 30px 30px;
+	border-radius: 10px;
+	position: relative;
+	top: -150px;
+	z-index: 1;
+	clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+	transition: clip-path .3s ease-out;
+}
+
+.formulario-tarjeta.active {
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.formulario-tarjeta label {
+	display: block;
+	color: #7d8994;
+	margin-bottom: 5px;
+	font-size: 16px;
+}
+
+.formulario-tarjeta input,
+.formulario-tarjeta select,
+.btn-enviar {
+	border: 2px solid #CED6E0;
+	font-size: 18px;
+	height: 50px;
+	width: 100%;
+	padding: 5px 12px;
+	transition: .3s ease all;
+	border-radius: 5px;
+}
+
+.formulario-tarjeta input:hover,
+.formulario-tarjeta select:hover {
+	border: 2px solid #93BDED;
+}
+
+.formulario-tarjeta input:focus,
+.formulario-tarjeta select:focus {
+	outline: rgb(4,4,4);
+	box-shadow: 1px 7px 10px -5px rgba(90,116,148,0.3);
+}
+
+.formulario-tarjeta input {
+	margin-bottom: 20px;
+	text-transform: uppercase;
+}
+
+.formulario-tarjeta .flexbox {
+	display: flex;
+	justify-content: space-between;
+}
+
+.formulario-tarjeta .expira {
+	width: 100%;
+}
+
+.formulario-tarjeta .ccv {
+	min-width: 100px;
+}
+
+.formulario-tarjeta .grupo-select {
+	width: 100%;
+	margin-right: 15px;
+	position: relative;
+}
+
+.formulario-tarjeta select {
+	-webkit-appearance: none;
+}
+
+.formulario-tarjeta .grupo-select i {
+	position: absolute;
+	color: #CED6E0;
+	top: 18px;
+	right: 15px;
+	transition: .3s ease all;
+}
+
+.formulario-tarjeta .grupo-select:hover i {
+	color: #93bfed;
+}
+
+.formulario-tarjeta .btn-enviar {
+	border: none;
+	padding: 10px;
+	font-size: 22px;
+	color: #fff;
+	background: #2364d2;
+	box-shadow: 2px 2px 10px 0px rgba(0,85,212,0.4);
+	cursor: pointer;
+}
+
+.formulario-tarjeta .btn-enviar:hover {
+	background: #1850b1;
 }
 </style>
 
@@ -698,274 +364,230 @@ body {
 </div>
 
 {{-- Resto del form  --}}
-<div class="wrapper" id="app">
-    <div class="card-form">
-      <div class="card-list">
-        <div class="card-item" v-bind:class="{ '-active' : isCardFlipped }">
-          <div class="card-item__side -front">
-            <div class="card-item__focus" v-bind:class="{'-active' : focusElementStyle }" v-bind:style="focusElementStyle" ref="focusElement"></div>
-            <div class="card-item__cover">
-              <img
-              v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg">
-            </div>
-            
-            <div class="card-item__wrapper">
-              <div class="card-item__top">
-                <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" class="card-item__chip">
-                <div class="card-item__type">
-                  <transition name="slide-fade-up">
-                    <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
-                  </transition>
-                </div>
-              </div>
-              <label for="cardNumber" class="card-item__number" ref="cardNumber">
-                <template v-if="getCardType === 'amex'">
-                 <span v-for="(n, $index) in amexCardMask" :key="$index">
-                  <transition name="slide-fade-up">
-                    <div
-                      class="card-item__numberItem"
-                      v-if="$index > 4 && $index < 14 && cardNumber.length > $index && n.trim() !== ''"
-                    >*</div>
-                    <div class="card-item__numberItem"
-                      :class="{ '-active' : n.trim() === '' }"
-                      :key="$index" v-else-if="cardNumber.length > $index">
-                      {{cardNumber[$index]}}
-                    </div>
-                    <div
-                      class="card-item__numberItem"
-                      :class="{ '-active' : n.trim() === '' }"
-                      v-else
-                      :key="$index + 1"
-                    >{{n}}</div>
-                  </transition>
-                </span>
-                </template>
+<div class="contenedor">
 
-                <template v-else>
-                  <span v-for="(n, $index) in otherCardMask" :key="$index">
-                    <transition name="slide-fade-up">
-                      <div
-                        class="card-item__numberItem"
-                        v-if="$index > 4 && $index < 15 && cardNumber.length > $index && n.trim() !== ''"
-                      >*</div>
-                      <div class="card-item__numberItem"
-                        :class="{ '-active' : n.trim() === '' }"
-                        :key="$index" v-else-if="cardNumber.length > $index">
-                        {{cardNumber[$index]}}
-                      </div>
-                      <div
-                        class="card-item__numberItem"
-                        :class="{ '-active' : n.trim() === '' }"
-                        v-else
-                        :key="$index + 1"
-                      >{{n}}</div>
-                    </transition>
-                  </span>
-                </template>
-              </label>
-              <div class="card-item__content">
-                <label for="cardName" class="card-item__info" ref="cardName">
-                  <div class="card-item__holder">Card Holder</div>
-                  <transition name="slide-fade-up">
-                    <div class="card-item__name" v-if="cardName.length" key="1">
-                      <transition-group name="slide-fade-right">
-                        <span class="card-item__nameItem" v-for="(n, $index) in cardName.replace(/\s\s+/g, ' ')" v-if="$index === $index" v-bind:key="$index + 1">{{n}}</span>
-                      </transition-group>
-                    </div>
-                    <div class="card-item__name" v-else key="2">Full Name</div>
-                  </transition>
-                </label>
-                <div class="card-item__date" ref="cardDate">
-                  <label for="cardMonth" class="card-item__dateTitle">Expires</label>
-                  <label for="cardMonth" class="card-item__dateItem">
-                    <transition name="slide-fade-up">
-                      <span v-if="cardMonth" v-bind:key="cardMonth">{{cardMonth}}</span>
-                      <span v-else key="2">MM</span>
-                    </transition>
-                  </label>
-                  /
-                  <label for="cardYear" class="card-item__dateItem">
-                    <transition name="slide-fade-up">
-                      <span v-if="cardYear" v-bind:key="cardYear">{{String(cardYear).slice(2,4)}}</span>
-                      <span v-else key="2">YY</span>
-                    </transition>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-item__side -back">
-            <div class="card-item__cover">
-              <img
-              v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg">
-            </div>
-            <div class="card-item__band"></div>
-            <div class="card-item__cvv">
-                <div class="card-item__cvvTitle">CVV</div>
-                <div class="card-item__cvvBand">
-                  <span v-for="(n, $index) in cardCvv" :key="$index">
-                    *
-                  </span>
-
-              </div>
-                <div class="card-item__type">
-                    <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" class="card-item__typeImg">
-                </div>
-            </div>
-          </div>
-        </div>
+  <!-- Tarjeta -->
+  <section class="tarjeta" id="tarjeta">
+    <div class="delantera">
+      <div class="logo-marca" id="logo-marca">
+        <!-- <img src="img/logos/visa.png" alt=""> -->
       </div>
-      <div class="card-form__inner">
-        <div class="card-input">
-          <label for="cardNumber" class="card-input__label">Card Number</label>
-          <input type="text" id="cardNumber" class="card-input__input" v-mask="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+      <img src="{{ asset('img/chip-tarjeta.png') }}" class="chip" alt="">
+      <div class="datos">
+        <div class="grupo" id="numero">
+          <p class="label">Número Tarjeta</p>
+          <p class="numero">#### #### #### ####</p>
         </div>
-        <div class="card-input">
-          <label for="cardName" class="card-input__label">Card Holders</label>
-          <input type="text" id="cardName" class="card-input__input" v-model="cardName" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardName" autocomplete="off">
-        </div>
-        <div class="card-form__row">
-          <div class="card-form__col">
-            <div class="card-form__group">
-              <label for="cardMonth" class="card-input__label">Expiration Date</label>
-              <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-                <option value="" disabled selected>Month</option>
-                <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12" v-bind:disabled="n < minCardMonth" v-bind:key="n">
-                    {{n < 10 ? '0' + n : n}}
-                </option>
-              </select>
-              <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-                <option value="" disabled selected>Year</option>
-                <option v-bind:value="$index + minCardYear" v-for="(n, $index) in 12" v-bind:key="n">
-                    {{$index + minCardYear}}
-                </option>
-              </select>
-            </div>
+        <div class="flexbox">
+          <div class="grupo" id="nombre">
+            <p class="label">Nombre Tarjeta</p>
+            <p class="nombre">Jhon Doe</p>
           </div>
-          <div class="card-form__col -cvv">
-            <div class="card-input">
-              <label for="cardCvv" class="card-input__label">CVV</label>
-              <input type="text" class="card-input__input" id="cardCvv" v-mask="'####'" maxlength="4" v-model="cardCvv" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off">
-            </div>
-          </div>
-        </div>
 
-        <button class="card-form__button">
-          Submit
-        </button>
+          <div class="grupo" id="expiracion">
+            <p class="label">Expiracion</p>
+            <p class="expiracion"><span class="mes">MM</span> / <span class="year">AA</span></p>
+          </div>
+        </div>
       </div>
     </div>
-    
-    
+
+    <div class="trasera">
+      <div class="barra-magnetica"></div>
+      <div class="datos">
+        <div class="grupo" id="firma">
+          <p class="label">Firma</p>
+          <div class="firma"><p></p></div>
+        </div>
+        <div class="grupo" id="ccv">
+          <p class="label">CCV</p>
+          <p class="ccv"></p>
+        </div>
+      </div>
+      <p class="leyenda">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus exercitationem, voluptates illo.</p>
+      <a href="#" class="link-banco">www.tubanco.com</a>
+    </div>
+  </section>
+
+  <!-- Contenedor Boton Abrir Formulario -->
+  <div class="contenedor-btn">
+    <button class="btn-abrir-formulario" id="btn-abrir-formulario">
+      <i class="fas fa-plus"></i>
+    </button>
   </div>
+
+  <!-- Formulario -->
+  <form action="" id="formulario-tarjeta" class="formulario-tarjeta">
+    <div class="grupo">
+      <label for="inputNumero">Número Tarjeta</label>
+      <input type="text" id="inputNumero" maxlength="19" autocomplete="off">
+    </div>
+    <div class="grupo">
+      <label for="inputNombre">Nombre</label>
+      <input type="text" id="inputNombre" maxlength="19" autocomplete="off">
+    </div>
+    <div class="flexbox">
+      <div class="grupo expira">
+        <label for="selectMes">Expiracion</label>
+        <div class="flexbox">
+          <div class="grupo-select">
+            <select name="mes" id="selectMes">
+              <option disabled selected>Mes</option>
+            </select>
+            <i class="fas fa-angle-down"></i>
+          </div>
+          <div class="grupo-select">
+            <select name="year" id="selectYear">
+              <option disabled selected>Año</option>
+            </select>
+            <i class="fas fa-angle-down"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="grupo ccv">
+        <label for="inputCCV">CCV</label>
+        <input type="text" id="inputCCV" maxlength="3">
+      </div>
+    </div>
+    <button type="submit" class="btn-enviar">Enviar</button>
+  </form>
+</div>
 {{-- ..//// --}}
+
+
 @endsection
 
-@section('scripts')
-<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
-<script src='https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js'></script>
 
+<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 <script>
-    new Vue({
-    el: "#app",
-    data() {
-      return {
-        currentCardBackground: Math.floor(Math.random()* 25 + 1), // just for fun :D
-        cardName: "",
-        cardNumber: "",
-        cardMonth: "",
-        cardYear: "",
-        cardCvv: "",
-        minCardYear: new Date().getFullYear(),
-        amexCardMask: "#### ###### #####",
-        otherCardMask: "#### #### #### ####",
-        cardNumberTemp: "",
-        isCardFlipped: false,
-        focusElementStyle: null,
-        isInputFocused: false
-      };
-    },
-    mounted() {
-      this.cardNumberTemp = this.otherCardMask;
-      document.getElementById("cardNumber").focus();
-    },
-    computed: {
-      getCardType () {
-        let number = this.cardNumber;
-        let re = new RegExp("^4");
-        if (number.match(re) != null) return "visa";
-  
-        re = new RegExp("^(34|37)");
-        if (number.match(re) != null) return "amex";
-  
-        re = new RegExp("^5[1-5]");
-        if (number.match(re) != null) return "mastercard";
-  
-        re = new RegExp("^6011");
-        if (number.match(re) != null) return "discover";
-        
-        re = new RegExp('^9792')
-        if (number.match(re) != null) return 'troy'
-  
-        return "visa"; // default type
-      },
-          generateCardNumberMask () {
-              return this.getCardType === "amex" ? this.amexCardMask : this.otherCardMask;
-      },
-      minCardMonth () {
-        if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1;
-        return 1;
-      }
-    },
-    watch: {
-      cardYear () {
-        if (this.cardMonth < this.minCardMonth) {
-          this.cardMonth = "";
-        }
-      }
-    },
-    methods: {
-      flipCard (status) {
-        this.isCardFlipped = status;
-      },
-      focusInput (e) {
-        this.isInputFocused = true;
-        let targetRef = e.target.dataset.ref;
-        let target = this.$refs[targetRef];
-        this.focusElementStyle = {
-          width: `${target.offsetWidth}px`,
-          height: `${target.offsetHeight}px`,
-          transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`
-        }
-      },
-      blurInput() {
-        let vm = this;
-        setTimeout(() => {
-          if (!vm.isInputFocused) {
-            vm.focusElementStyle = null;
-          }
-        }, 300);
-        vm.isInputFocused = false;
-      }
-    }
-  });
+
+    const tarjeta = document.querySelector('#tarjeta');
+	  const btnAbrirFormulario = document.querySelector('#btn-abrir-formulario');
+	  const formulario = document.querySelector('#formulario-tarjeta');
+	  const numeroTarjeta = document.querySelector('#tarjeta .numero');
+	  const nombreTarjeta = document.querySelector('#tarjeta .nombre');
+	  const logoMarca = document.querySelector('#logo-marca');
+	  const firma = document.querySelector('#tarjeta .firma p');
+	  const mesExpiracion = document.querySelector('#tarjeta .mes');
+	  const yearExpiracion = document.querySelector('#tarjeta .year');
+	  const ccv = document.querySelector('#tarjeta .ccv');
+
+// * Volteamos la tarjeta para mostrar el frente.
+const mostrarFrente = () => {
+	if(tarjeta.classList.contains('active')){
+		tarjeta.classList.remove('active');
+	}
+}
+
+// * Rotacion de la tarjeta
+tarjeta.addEventListener('click', () => {
+	tarjeta.classList.toggle('active');
+});
+
+// * Boton de abrir formulario
+btnAbrirFormulario.addEventListener('click', () => {
+	btnAbrirFormulario.classList.toggle('active');
+	formulario.classList.toggle('active');
+});
+
+// * Select del mes generado dinamicamente.
+for(let i = 1; i <= 12; i++){
+	let opcion = document.createElement('option');
+	opcion.value = i;
+	opcion.innerText = i;
+	formulario.selectMes.appendChild(opcion);
+}
+
+// * Select del año generado dinamicamente.
+const yearActual = new Date().getFullYear();
+for(let i = yearActual; i <= yearActual + 8; i++){
+	let opcion = document.createElement('option');
+	opcion.value = i;
+	opcion.innerText = i;
+	formulario.selectYear.appendChild(opcion);
+}
+
+// * Input numero de tarjeta
+formulario.inputNumero.addEventListener('keyup', (e) => {
+	let valorInput = e.target.value;
+
+	formulario.inputNumero.value = valorInput
+	// Eliminamos espacios en blanco
+	.replace(/\s/g, '')
+	// Eliminar las letras
+	.replace(/\D/g, '')
+	// Ponemos espacio cada cuatro numeros
+	.replace(/([0-9]{4})/g, '$1 ')
+	// Elimina el ultimo espaciado
+	.trim();
+
+	numeroTarjeta.textContent = valorInput;
+
+	if(valorInput == ''){
+		numeroTarjeta.textContent = '#### #### #### ####';
+
+		logoMarca.innerHTML = '';
+	}
+
+	if(valorInput[0] == 4){
+		logoMarca.innerHTML = '';
+		const imagen = document.createElement('img');
+		imagen.src = 'img/logos/visa.png';
+		logoMarca.appendChild(imagen);
+	} else if(valorInput[0] == 5){
+		logoMarca.innerHTML = '';
+		const imagen = document.createElement('img');
+		imagen.src = 'img/logos/mastercard.png';
+		logoMarca.appendChild(imagen);
+	}
+
+	// Volteamos la tarjeta para que el usuario vea el frente.
+	mostrarFrente();
+});
+
+// * Input nombre de tarjeta
+formulario.inputNombre.addEventListener('keyup', (e) => {
+	let valorInput = e.target.value;
+
+	formulario.inputNombre.value = valorInput.replace(/[0-9]/g, '');
+	nombreTarjeta.textContent = valorInput;
+	firma.textContent = valorInput;
+
+	if(valorInput == ''){
+		nombreTarjeta.textContent = 'Jhon Doe';
+	}
+
+	mostrarFrente();
+});
+
+// * Select mes
+formulario.selectMes.addEventListener('change', (e) => {
+	mesExpiracion.textContent = e.target.value;
+	mostrarFrente();
+});
+
+// * Select Año
+formulario.selectYear.addEventListener('change', (e) => {
+	yearExpiracion.textContent = e.target.value.slice(2);
+	mostrarFrente();
+});
+
+// * CCV
+formulario.inputCCV.addEventListener('keyup', () => {
+	if(!tarjeta.classList.contains('active')){
+		tarjeta.classList.toggle('active');
+	}
+
+	formulario.inputCCV.value = formulario.inputCCV.value
+	// Eliminar los espacios
+	.replace(/\s/g, '')
+	// Eliminar las letras
+	.replace(/\D/g, '');
+
+	ccv.textContent = formulario.inputCCV.value;
+});
 </script>
 
-<script>
-    // Función para agregar espacios automáticamente cada 4 caracteres en el campo de número de tarjeta de crédito
-    function formatCreditCardNumber(el) {
-        var value = el.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-        var matches = value.match(/\d{4,16}/g);
-        var match = matches && matches[0] || '';
-        var parts = [];
-        for (i = 0, len = match.length; i < len; i += 4) {
-            parts.push(match.substring(i, i + 4));
-        }
-        if (parts.length) {
-            el.value = parts.join(' ');
-        } else {
-            el.value = value;
-        }
-    }
-</script>
-@endsection
+
+
