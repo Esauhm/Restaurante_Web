@@ -260,9 +260,9 @@ body {
 	position: relative;
 }
 
-.formulario-tarjeta select {
+/* .formulario-tarjeta select {
 	-webkit-appearance: none;
-}
+} */
 
 .formulario-tarjeta .grupo-select i {
 	position: absolute;
