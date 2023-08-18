@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-5">Pedido de {{ $usuario->name }} fecha: {{ $pedido->fecha_pedido }}</h1>
+    <h1 class="my-5">fecha: {{ $pedido->fecha_pedido }}</h1>
 
     <div class="row">
         <div class="col-md-6">
@@ -43,7 +43,7 @@
                     <option value="3">Cancelado</option>
                 </select>
             </div>
-            <input type="hidden" name="id_pedido" value="{{ $pedido->IdPedido }}">
+            <input type="hidden" name="id_pedido" value="{{ $pedido->id_pedido }}">
             <button type="submit" class="btn btn-success btn-sm">Cambiar estado</button>
         </form>
     @endif

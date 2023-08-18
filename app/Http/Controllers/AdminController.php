@@ -129,13 +129,11 @@ namespace App\Http\Controllers;
         {
             $idPedido = $request->input('id_pedido');
             
-
+            $pedido = new Pedido();
             // Obtenemos el pedido por su id usando Eloquent
-            $pedido = Pedido::find($idPedido);
-
-            $usuario = User::find($pedido->id_usuario);
-
-            
+            $pedidos = $pedido->obtenerPedidoPorId($idPedido);
+/*
+            $usuario = User::find($pedido->id_usuario);           */ 
 
           
             // llamamos al modelo DetallePedido y creamos una instancia
@@ -152,7 +150,7 @@ namespace App\Http\Controllers;
             
 
             // Pasamos los resultados a la vista del detalle del pedido
-            return view('Admin.DetallePedido', ['usuario' => $usuario, 'pedido' => $pedido, 'detallesPedido' => $detallesPedido]);
+            return view('Admin.DetallePedido', ['pedido' => $pedido, 'detallesPedido' => $detallesPedido]);
         }
      
     }

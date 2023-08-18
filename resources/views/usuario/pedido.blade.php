@@ -50,13 +50,13 @@
                     <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
-                                <td>{{ $pedido->id }}</td>
+                                <td>{{ $pedido->id_pedido }}</td>
                                 <td>{{ $pedido->fecha_pedido }}</td>
                                 <td>{{ $pedido->id_estado_pedido }}</td>
                                 <td>
                                     <form method="post" action="{{ route('detalle.pedido') }}">
                                         @csrf
-                                        <input type="hidden" name="id_pedido" value="{{ $pedido->id }}">
+                                        <input type="hidden" name="id_pedido" value="{{ $pedido->id_pedido }}">
                                         <button type="submit" class="btn btn-info">Ver Detalle</button>
                                     </form>
                                 </td>
