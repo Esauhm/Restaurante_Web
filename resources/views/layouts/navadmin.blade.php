@@ -18,7 +18,7 @@
                 <ul class="navbar-nav align-middle">
 
      
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrar</a></li> 
+                <li class="nav-item"><a class="nav-link" href="{{route('users.list')}}">Administrar usuarios</a></li> 
 
                
 

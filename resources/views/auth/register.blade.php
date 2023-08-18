@@ -1,8 +1,3 @@
-@auth
-@if (auth()->user()->rol == 1)
-@include('layouts.header')
-@endif
-@endauth
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
@@ -58,29 +53,14 @@
                 </x-label>
             </div>
             @endif
-            @auth
-            @if (auth()->user()->rol == 1)
-            <input type="hidden" name="validador" value="1">
-            <div class="mt-4">
-                <div class="form-group">
-                    <label for="rol">Rol:</label>
-                    <select class="form-select" name="rol" id="rol" >
-                        <option value="">Seleccione</option>
-                        <option value="1">Administrador</option>
-                        <option value="2">Usuario</option>
-                    </select>
-                    <span id="rol-error" class="text-red-500 mt-2 text-sm"></span>
-                </div>
-            </div>
-            @endif
-            @endauth
+         
             <div class="flex items-center justify-end mt-4">
-                @guest
+               
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
-                @endguest
+              
 
                 <x-button class="ml-4">
                     {{ __('Registrar') }}

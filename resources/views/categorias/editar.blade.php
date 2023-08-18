@@ -25,11 +25,14 @@
                 <td>{{ $categoria->descripcion }}</td>
                 <td>
                     <!-- Mostrar estado actual -->
-                    {{ $categoria->estado == 1 ? 'Disponible' : 'No Disponible' }}
+                    {!! $adminController->mostrarEstadoCategoria($categoria) !!}    
                 </td>
                 <td>
-                    <!-- Llama a la función mostrarEstadoCategoria del controlador -->
-                    {!! $adminController->mostrarEstadoCategoria($categoria) !!}
+                <form method="post" action="{{ route('categorias.show', ['id_categoria' => $categoria->id_categoria]) }}">
+                @csrf
+                <button type="submit" class="btn btn-primary">Editar</button>
+                </form>
+                    
                 </td>
             </tr>
             @endforeach

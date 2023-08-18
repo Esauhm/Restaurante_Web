@@ -23,20 +23,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // Obtener el usuario autenticado
-                $user = Auth::guard($guard)->user();
-                     
-
-                // Verificar el rol del usuario
-                if ($user->rol == 1) {
-                 return $next($request);
-                } else {
-                    // Redirigir a la página principal normalmente
-                    return redirect(RouteServiceProvider::HOME);
-                }
+                return redirect(RouteServiceProvider::HOME);
             }
         }
-    
+
         return $next($request);
     }
 }

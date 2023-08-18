@@ -20,7 +20,7 @@ class Categoria extends Model
     public static function agregarCategoria($descripcion, $estado)
     {
         try {
-            DB::table('categoria')->insert([
+            Categoria::create([
                 'descripcion' => $descripcion,
                 'estado' => $estado,
             ]);
@@ -33,8 +33,8 @@ class Categoria extends Model
     public static function modificarCategoria($idCategoria, $descripcion, $estado)
     {
         try {
-            DB::table('categoria')
-                ->where('id_categoria', $idCategoria)
+            
+            Categoria::where('id_categoria', $idCategoria)
                 ->update([
                     'descripcion' => $descripcion,
                     'estado' => $estado,
@@ -43,7 +43,6 @@ class Categoria extends Model
             echo "Error: " . $e->getMessage();
         }
     }
-
     // Método para obtener una categoría por su ID
     public static function editarCategoria($id_categoria)
     {
@@ -77,11 +76,9 @@ class Categoria extends Model
     public static function actualizarEstado($id_categoria, $nuevo_estado)
     {
         try {
-            DB::table('categoria')
-                ->where('id_categoria', $id_categoria)
-                ->update([
-                    'estado' => $nuevo_estado,
-                ]);
+            Categoria::where('id_categoria', $id_categoria)
+            ->update(['estado' => $nuevo_estado]);
+           
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
         }

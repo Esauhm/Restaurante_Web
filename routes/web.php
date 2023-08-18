@@ -107,13 +107,21 @@ Route::post('/admin/detallePedido', [AdminController::class, 'detallePedido'])->
 
 Route::get('/categorias/create', [AdminController::class, 'Addcategoria'])->name('categorias.create');
 
+Route::post('/categorias/agrega', [AdminController::class, 'agregarCategoria'])->name('categorias.agregar');
+
 Route::get('/categorias/editar', [AdminController::class, 'EditCategorias'])->name('categorias.editar');
 
-Route::post('Admin/cambiarEstadoCategoria', 'Admincontroller@cambiarEstadoCategoria')->name('cambiarEstado');
+Route::post('/categorias/cambiarEstado', [AdminController::class, 'cambiarEstadoCategoria'])->name('cambiarEstado');
 
+Route::post('/categorias/editar/{id_categoria}', [AdminController::class, 'showCategory'])->name('categorias.show');
 
+Route::post('/categorias/editar/', [AdminController::class, 'actualizarcategoria'])->name('categorias.update');
+Route::get('/users', [AdminController::class, 'listUsers'])->name('users.list');
+Route::put('/user/update-role/{user}', [AdminController::class, 'updateRole'])->name('user.updateRole');
 
 Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->name('pago.index');
 
 Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');
+
+
 

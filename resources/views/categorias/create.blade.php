@@ -2,7 +2,8 @@
 @section('content')
 <div class="container">
   <h1 class="mt-5">Agregar categoria</h1>
-  <form class="mt-5" action="{{ route('categorias.create') }}">
+  <form class="mt-5" method="post" action="{{ route('categorias.agregar') }}">
+    @csrf
         <div class="form-group">
             <label for="descripcion">Descripción</label>
             <input type="text" class="form-control" id="descripcion" name="descripcion" value="">
