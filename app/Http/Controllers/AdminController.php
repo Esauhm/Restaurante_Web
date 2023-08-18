@@ -271,20 +271,27 @@ namespace App\Http\Controllers;
                     // Comprobar si el formulario se ha enviado
                     if ($request->isMethod('post')) {
                         $request->validate([
-                            'image_url' => 'required|image|mimes:jpg,jpeg,png,gif',
+                            'image_url' => 'image|mimes:jpg,jpeg,png,gif',
                             // Agrega más validaciones aquí para los otros campos si es necesario
                         ]);
-                
+                        $file = $request->file('image_url');                           
+                        if($file){
+                           
+                            $file_ext = $file->getClientOriginalExtension();
+                            $new_file_name = uniqid('', true) . '.' . $file_ext;
+                            Storage::disk('public')->putFileAs('uploads', $file, $new_file_name);
+                            $image_url = asset('storage/uploads/' . $new_file_name);
+                        }else{
+                            $image_url = $request->input('imagen_actual');
+                        }
                         // Obtener el archivo subido
-                        $file = $request->file('image_url');
-                        $file_ext = $file->getClientOriginalExtension();
-                        $new_file_name = uniqid('', true) . '.' . $file_ext;
+                       
                 
                         // Guardar la imagen en la carpeta "uploads"
-                        Storage::disk('public')->putFileAs('uploads', $file, $new_file_name);
+                      
                 
                         // Obtener la URL completa de la imagen
-                        $image_url = asset('storage/uploads/' . $new_file_name);
+                    
                 
                         // Recoger los datos del formulario
                         $id_producto = $request->input('id');
@@ -293,20 +300,15 @@ namespace App\Http\Controllers;
                         $descripcion = $request->input('descripcion');
                         $categoria = $request->input('categoria');
                         $estado = $request->input('estado');
-                        if ($request->hasFile('image_url')) {
-                            // Procesar la nueva imagen y obtener la URL
-                            // (código similar al que mencioné en respuestas anteriores)
-                            $new_image_url = $file;// Obtener la URL de la nueva imagen
-                        } else {
-                            // Utilizar la URL de la imagen actual almacenada en el campo oculto
-                            $new_image_url = $request->input('imagen_actual');
-                        }
+
+                        
                         Producto::actualizarProducto($id_producto, $nombre, $precio, $descripcion, $categoria, $image_url, $estado);
                 
                         $productos = Producto::listarProductos();
             
                 return view('productos.index', ['productos' => $productos]);     
                     }
+                    
                 }
 
         

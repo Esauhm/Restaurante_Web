@@ -71,11 +71,7 @@
                                                 <i class="fas fa-user"></i> Mi perfil
                                             </a>
                                         </li>
-                                        <li class="dropdown-item">
-                                            <a class="dropdown-link" href="Usuario/pedido">
-                                                <i class="fas fa-clipboard-list"></i> Mis pedidos
-                                            </a>
-                                        </li>
+                                        
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

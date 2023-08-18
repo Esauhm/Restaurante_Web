@@ -47,7 +47,15 @@
                     <td>{{ $pedido->id_pedido }}</td>
                     <td>{{ $pedido->total_pagar }}</td>
                     <td>{{ $pedido->fecha_pedido }}</td>
-                    <td>{{ $pedido->Estado }}</td>
+                    <td>
+                    @if($pedido->Estado === 'Cancelado')
+                    <p class="text-danger">
+                    @else
+                    <p>
+                    @endif
+                    {{ $pedido->Estado }} <p/>
+                    
+                    </td>
                     <td>
                         <form method="post" action="{{ route('detalle.pedido') }}">
                             @csrf
@@ -56,19 +64,24 @@
                         </form>
                     </td>
                     <td class="text-center col-2">
+                    @if($pedido->Estado === 'En proceso')
                         <form method="post" action="{{ route('admin.cambiarEstado') }}">
                             @csrf
-                            <div class="form-group">
-                                <label for="id_estado2">Estado:</label>
-                                <select id="id_estado2" name="id_estado2" class="form-control">
-                                    <option value="1">En proceso</option>
-                                    <option value="2">Finalizado</option>
-                                    <option value="3">Cancelado</option>
-                                </select>
-                            </div>
+                          
+                                <div class="form-group">
+                                    <label for="id_estado2">Estado:</label>
+                                    <select id="id_estado2" name="id_estado2" class="form-control">
+                                        <option value="1">En proceso</option>
+                                        <option value="2">Finalizado</option>
+                                        <option value="3">Cancelado</option>
+                                    </select>
+                                </div>
+                          
                             <input type="hidden" name="id_pedido" value="{{ $pedido->id_pedido }}">
                             <button type="submit" class="btn btn-success btn-sm">Cambiar estado</button>
+                           
                         </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

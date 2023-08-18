@@ -37,11 +37,12 @@
         <div class="form-group row mb-3">
             <label for="image_url" class="col-sm-3 col-form-label"><i class="fas fa-image"></i> Subir imagen:</label>
             <div class="col-sm-9">
-                <!-- Mostrar la imagen actual 
-                <img src="{{ $producto->image_url }}" alt="Imagen del Producto" style="max-width: 25%;">-->
+                <!-- Mostrar la imagen actual -->
+                <input type="hidden" name="imagen_actual" value="{{ $producto->image_url }}">
+                <img src="{{ $producto->image_url }}" alt="Imagen del Producto" style="max-width: 25%;">
                 
                 <!-- Input para actualizar la imagen -->
-                <input type="file" class="form-control" id="image_url" name="image_url" accept="image/*" value="{{$producto->image_url}}">
+                <input type="file" class="form-control" id="image_url" name="image_url" accept="image/*" >
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar</button>
