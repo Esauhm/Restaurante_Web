@@ -54,7 +54,7 @@
                                 <td>{{ $pedido->fecha_pedido }}</td>
                                 <td>{{ $pedido->id_estado_pedido }}</td>
                                 <td>
-                                    <form method="post" action="{{ route('admin.detallePedido') }}">
+                                    <form method="post" action="{{ route('detalle.pedido') }}">
                                         @csrf
                                         <input type="hidden" name="id_pedido" value="{{ $pedido->id }}">
                                         <button type="submit" class="btn btn-info">Ver Detalle</button>

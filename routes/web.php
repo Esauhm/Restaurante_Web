@@ -117,3 +117,5 @@ Route::post('/pedido/procesar', [PedidoController::class, 'procesarPedidoT'])->n
 
 Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT'])->name('pedido.procesarPedidos');
 
+
+Route::post('/detalle-pedido',  [AdminController::class, 'detallePedido'])->name('detalle.pedido');
