@@ -124,6 +124,36 @@ namespace App\Http\Controllers;
             return $html;
         }
 
+
+        public function detallePedido(Request $request)
+        {
+            $idPedido = $request->input('id_pedido');
+            
+
+            // Obtenemos el pedido por su id usando Eloquent
+            $pedido = Pedido::find($idPedido);
+
+            $usuario = User::find($pedido->id_usuario);
+
+            
+
+          
+            // llamamos al modelo DetallePedido y creamos una instancia
+            $detallePedido = new DetallePedido();
+
+            // llamamos al método obtenerDetallesPedido y pasamos el id del pedido como argumento
+            $detallesPedido = $detallePedido->obtenerDetallesPedido($idPedido);
+            
+
+            
+
+
+            
+            
+
+            // Pasamos los resultados a la vista del detalle del pedido
+            return view('Admin.DetallePedido', ['usuario' => $usuario, 'pedido' => $pedido, 'detallesPedido' => $detallesPedido]);
+        }
      
     }
 

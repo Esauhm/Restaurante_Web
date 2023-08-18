@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class DetallePedido extends Model
@@ -40,14 +41,15 @@ class DetallePedido extends Model
     public function obtenerDetallesPedido($idPedido)
     {
         try {
-            $detallesPedido = DB::table('detalle_pedidos')
-                ->join('productos', 'detalle_pedidos.id_producto', '=', 'productos.id_producto')
+            $detallesPedido = DetallePedido::join('productos', 'detalle_pedidos.id_producto', '=', 'productos.id_producto')
                 ->select('detalle_pedidos.cantidad', 'productos.nombre', 'productos.precio')
                 ->where('detalle_pedidos.id_pedido', $idPedido)
                 ->get();
+    
+            
 
             return $detallesPedido;
-
+    
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
             return [];

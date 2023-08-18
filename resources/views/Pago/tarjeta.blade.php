@@ -21,7 +21,8 @@
                     @endphp
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('pedido.procesarPedidos') }}" method="POST">
+                    <form action="{{ route('pedido.procesarPedido') }}" method="POST" id="miFormulario">
+                      
                         @csrf
                         <!-- tabla de resumen de pedido -->
                         <div class="table-responsive">
@@ -59,9 +60,16 @@
                                 </tfoot>
                             </table>
                         </div>
-                       
+                        <div class="flex-fill col-md-6 mt-4 ">
+                          <div class="mb-3">
+                              <label for="direccion_envio" class="form-label">Dirección de envío:</label>
+                              <input type="text" class="form-control" name="direccion_envio" id="direccion_envio" required>
+                          </div>
+                          <input type="hidden" name="id_estado_pedido" value="1">
+                      </div>
 
-                        
+                      
+                        <button type="submit" id="botonEnviar" class="btn-enviar" >Pagar</button>
 
 
                     </form>
@@ -125,27 +133,31 @@
   </div>
 
   <!-- Formulario -->
-  <form action="" id="formulario-tarjeta" class="formulario-tarjeta">
+  <form id="formulario-tarjeta" class="formulario-tarjeta">
     <div class="grupo">
       <label for="inputNumero">Número Tarjeta</label>
-      <input type="text" id="inputNumero" maxlength="19" autocomplete="off">
+      <input type="text" id="inputNumero" maxlength="19" autocomplete="off" >
     </div>
     <div class="grupo">
       <label for="inputNombre">Nombre</label>
-      <input type="text" id="inputNombre" maxlength="19" autocomplete="off">
+      <input type="text" id="inputNombre" maxlength="19" autocomplete="off" >
+    </div>
+    <div class="grupo">
+      <label for="inputNombre">dirección</label>
+      <input type="text" id="direccion_envio" nambe="direccion_envio" maxlength="19" autocomplete="off" >
     </div>
     <div class="flexbox">
       <div class="grupo expira">
         <label for="selectMes">Expiracion</label>
         <div class="flexbox">
           <div class="grupo-select">
-            <select name="mes" id="selectMes">
+            <select name="mes" id="selectMes" >
               <option disabled selected>Mes</option>
             </select>
             <i class="fas fa-angle-down"></i>
           </div>
           <div class="grupo-select">
-            <select name="year" id="selectYear">
+            <select name="year" id="selectYear" >
               <option disabled selected>Año</option>
             </select>
             <i class="fas fa-angle-down"></i>
@@ -155,10 +167,10 @@
 
       <div class="grupo ccv">
         <label for="inputCCV">CCV</label>
-        <input type="text" id="inputCCV" maxlength="3">
+        <input type="text" id="inputCCV" maxlength="3" >
       </div>
     </div>
-    <button type="submit" class="btn-enviar">Enviar</button>
+
   </form>
 </div>
 {{-- ..//// --}}
@@ -170,5 +182,42 @@
 <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 <script src="{{ asset('js/tarjeta.js') }}"></script>
 
+
+
+  
+  
+
+{{-- <script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var formulario = document.getElementById('formulario-tarjeta');
+      var botonEnviar = document.getElementById('botonEnviar');
+  
+      // Agregar un evento de entrada para verificar cuando los campos cambian
+      formulario.addEventListener('input', function() {
+          var numeroTarjeta = document.getElementById('inputNumero').value;
+          var inputNombre = document.getElementById('inputNombre').value;
+          var selectYear = document.getElementById('selectYear').value;
+          
+          // Verificar si todos los campos están llenos
+          if (numeroTarjeta.trim().length === 16 && numeroTarjeta.trim() !== '' && inputNombre.trim() !== '' && selectYear.trim() !== '') {
+              botonEnviar.removeAttribute('disabled'); // Habilitar el botón
+          } else {
+              botonEnviar.setAttribute('disabled', 'disabled'); // Deshabilitar el botón
+          }
+      });
+
+      formulario.addEventListener('submit', function(event) {
+        var numeroTarjeta = document.getElementById('inputNumero').value;
+        var inputNombre = document.getElementById('inputNombre').value;
+        var selectYear = document.getElementById('selectYear').value;
+        
+        // Verificar si los campos están llenos
+        if (numeroTarjeta.trim() === '' || inputNombre.trim() === '' || selectYear.trim() === '') {
+            alert('Por favor, completa todos los campos antes de enviar el formulario.');
+            event.preventDefault();
+        }
+    });
+  });
+  </script> --}}
 
 
