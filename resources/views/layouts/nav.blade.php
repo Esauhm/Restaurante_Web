@@ -46,13 +46,11 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li class="dropdown-item">
-                                            <a class="dropdown-link" href="{{ route('profile.show') }}">
+                                            <a class="dropdown-link" href="{{ route('usuario.perfil') }}">
                                                 <i class="fas fa-user"></i> Mi perfil
                                             </a>
                                         </li>
                                         <li class="dropdown-item">
-                                            
-
                                             
 
                                             <a href="#" onclick="event.preventDefault(); document.getElementById('pedido-form').submit();">

@@ -136,3 +136,14 @@ Route::post('/Admin/cambiarEstadoProducto', [AdminController::class, 'cambiarEst
 Route::get('/editar-producto', [AdminController::class, 'editarProducto'])->name('producto.editar');
 
 Route::post('/actualizarproducto', [AdminController::class, 'actualizarproducto'])->name('actualizar.producto');
+
+Route::post('/Admin/Pedido', [AdminController::class, 'pedidosA'])->name('admin.pedidos');
+
+Route::post('/Admin/Pedidos', [AdminController::class, 'cambiarEstado'])->name('admin.cambiarEstado');
+
+
+Route::get('/usuario/perfil', [AdminController::class, 'perfil'])->name('usuario.perfil');
+
+Route::get('/usuario/editperfil', [AdminController::class, 'perfilE'])->name('usuario.editperfil');
+
+Route::post('/usuario/Editperfil', [AdminController::class, 'actualizarPerfil'])->name('usuario.actualizarPerfil');

@@ -31,6 +31,22 @@ namespace App\Http\Controllers;
             return view('Usuario.Pedido', ['pedidos' => $pedidos]);
         }    
 
+        public function pedidosA(Request $request)
+        {
+            $fechaActual = now()->format('Y-m-d');
+            $fecha = $request->input('fecha_pedido', $fechaActual);
+            $idEstado = $request->input('id_estado');
+
+            $pedido = new Pedido();
+            $pedidos = $pedido->listarPedidos($fecha, $idEstado);
+
+          
+
+            
+
+            return view('Admin.Pedidos', ['pedidos' => $pedidos]);
+        }
+
         public function Addcategoria()
         {
             return view('categorias.create');
@@ -133,25 +149,17 @@ namespace App\Http\Controllers;
             $pedido = new Pedido();
             // Obtenemos el pedido por su id usando Eloquent
             $pedidos = $pedido->obtenerPedidoPorId($idPedido);
-/*
-            $usuario = User::find($pedido->id_usuario);           */ 
 
-          
+
             // llamamos al modelo DetallePedido y creamos una instancia
             $detallePedido = new DetallePedido();
 
             // llamamos al método obtenerDetallesPedido y pasamos el id del pedido como argumento
             $detallesPedido = $detallePedido->obtenerDetallesPedido($idPedido);
-            
 
-            
-
-
-            
-            
 
             // Pasamos los resultados a la vista del detalle del pedido
-            return view('Admin.DetallePedido', ['pedido' => $pedido, 'detallesPedido' => $detallesPedido]);
+            return view('Admin.DetallePedido', ['pedidos' => $pedidos, 'detallesPedido' => $detallesPedido]);
         }
 
         public function ProductosAdd()
@@ -302,6 +310,73 @@ namespace App\Http\Controllers;
                 }
 
         
+          //cambiar estadado 
+        public function cambiarEstado(Request $request)
+        {
+            if ($request->isMethod('post')) {
+                $id_pedido = $request->input('id_pedido');
+                $id_estado = $request->input('id_estado2');
+                
+                $pedidoModel = new Pedido();
+                $pedidoModel->actualizarEstado($id_pedido, $id_estado);
+                
+                $fechaActual = now()->format('Y-m-d');
+                $fecha = $request->input('fecha_pedido', $fechaActual);
+                $idEstado = $request->input('id_estado');
+
+                $pedido = new Pedido();
+                $pedidos = $pedido->listarPedidos($fecha, $idEstado);
+
+          
+
+            
+
+                return view('Admin.Pedidos', ['pedidos' => $pedidos]);
+            }
+        }
+
+
+        public function perfil()
+        {
+            $id_usuario = auth()->id(); // Obtén el ID del usuario autenticado
+            $usuario = User::find($id_usuario); // Suponiendo que UsuarioModel sea tu modelo
+
+           
+
+            return view('usuario.perfil', ['usuario' => $usuario]);
+        }
+
+        public function perfilE()
+        {
+            $id_usuario = auth()->id(); // Obtén el ID del usuario autenticado
+            $usuario = User::find($id_usuario); // Suponiendo que UsuarioModel sea tu modelo
+
+           
+
+            return view('usuario.editperfil', ['usuario' => $usuario]);
+        }
+
+
+        public function actualizarPerfil(Request $request)
+        {
+
+            $nombreUsuario = $request->input('nombre_usuario');
+            $correo = $request->input('correo');
+
+            $id_usuario = auth()->id(); // Obtén el ID del usuario autenticado
+            $usuario = User::find($id_usuario); // Suponiendo que tu modelo es UsuarioModel
+            $usuario->name = $nombreUsuario;
+            $usuario->email = $correo;
+            $resultado = $usuario->save();
+
+            if ($resultado) {
+                return view('usuario.perfil', ['usuario' => $usuario]);
+            } 
+        }
+
+
+
+
      
     }
 
