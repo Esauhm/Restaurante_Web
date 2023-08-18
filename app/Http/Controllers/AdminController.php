@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
     use App\Models\Categoria;
     use App\Models\detallepedido;
     use App\Models\User;
+    use Illuminate\Support\Facades\Storage; // Importa la clase Storage
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
     use Illuminate\Support\Facades\Session;
@@ -109,7 +110,7 @@ namespace App\Http\Controllers;
             $estado = $categoria->estado; // Acceso a la propiedad "estado" del modelo
             $id_categoria = $categoria->id_categoria; // Acceso a la propiedad "id_categoria" del modelo
             $buttonText = ($estado == 1) ? 'Disponible' : 'No Disponible';
-            $buttonClass = ($estado == 1) ? 'btn-success' : 'btn-danger';
+            $buttonClass = ($estado == 1) ? 'btn-success' : 'btn-secondary';
             
             $html = '
             <form method="post" action="'.route("cambiarEstado").'">                  
@@ -152,6 +153,155 @@ namespace App\Http\Controllers;
             // Pasamos los resultados a la vista del detalle del pedido
             return view('Admin.DetallePedido', ['pedido' => $pedido, 'detallesPedido' => $detallesPedido]);
         }
+
+        public function ProductosAdd()
+            {
+                // Creamos una instancia del modelo Categoria
+                $categoria = new Categoria();
+                
+                // Llamamos al método listarCategorias() del modelo Categoria
+                $categorias = $categoria->listarCategorias();
+                
+                // Pasamos los datos a la vista utilizando compact
+                return view('productos.create', ['categorias' => $categorias]);
+            }
+
+        public function agregarproducto(Request $request)
+            {
+                $nombre = $request->input('nombre');
+                $precio = $request->input('precio');
+                $descripcion = $request->input('descripcion');
+                $categoria = $request->input('categoria');
+                $estado = $request->input('estado');
+
+                // Obtener el archivo subido
+                $file = $request->file('image_url');
+
+                // Verificar que el archivo sea una imagen con una extensión válida
+                $allowed_exts = ['jpg', 'jpeg', 'png', 'gif'];
+                $file_ext = strtolower($file->getClientOriginalExtension());
+
+                if (!in_array($file_ext, $allowed_exts)) {
+                    return "Error: El archivo no es una imagen válida.";
+                }
+
+                // Guardar el archivo en el almacenamiento de Laravel (public/storage/uploads)
+                $new_file_name = uniqid('', true) . '.' . $file_ext;
+                $file->storeAs('public/uploads', $new_file_name);
+
+                // Obtener la URL completa de la imagen
+                $image_url = Storage::url('uploads/' . $new_file_name);
+
+                $producto = new Producto();
+
+                $resultado = $producto->agregarProducto($nombre, $precio, $descripcion, $categoria, $image_url, $estado);
+
+                // Si se agregó el producto correctamente, redirigir al listado de productos
+                return view('food.index');
+            }
+
+            public function Productos()
+            {
+                $productos = Producto::listarProductos();
+            
+                return view('productos.index', ['productos' => $productos]);               
+            }
+            public function cambiarEstadoProducto(Request $request) {
+                $idProducto = $request->input('id_producto');
+                $estadoActual = $request->input('estado');
+                $nuevoEstado = ($estadoActual == 1) ? 2 : 1;
+            
+                // Llamar al método actualizarEstado del modelo Producto
+                $producto = new Producto();
+                $producto->actualizarEstado($idProducto, $estadoActual);
+            
+                // Redirigir al listado de productos
+                return redirect()->route('admin.productos');
+            }
+
+            
+            function mostrarEstadoProducto($producto) {
+                $estado = $producto->estado;
+                $idProducto = $producto->id_producto;
+                
+                if ($estado == 1) {
+                    $buttonText = 'Disponible';
+                    $buttonClass = 'btn-success';
+                } else {
+                    $buttonText = 'No Disponible';
+                    $buttonClass = 'btn-secondary';
+                }
+                
+                $html = '
+                    <form method="post" action="' . route("admin.cambiarEstadoProducto") . '">
+                    <input type="hidden" name="_token" value="'.csrf_token().'">
+                        <input type="hidden" name="id_producto" value="' . $idProducto . '">
+                        <input type="hidden" name="estado" value="' . ($estado == 1 ? 2 : 1) . '">
+                        <button type="submit" class="btn ' . $buttonClass . '">' . $buttonText . '</button>
+                    </form>
+                ';
+                
+                return $html;
+            }
+            public function editarProducto(Request $request)
+            {
+                $id_producto = $request->input('id_producto');
+                $producto = Producto::editarProducto($id_producto);
+                $categoria = new Categoria();
+                $categorias = $categoria->listarCategorias();
+                
+                $data = [
+                    'producto' => $producto,
+                    'categorias' => $categorias
+                ];
+
+                return view('productos.show', $data); // Pasar el arreglo de datos a la vista
+            }
+
+                public function actualizarproducto(Request $request)
+                {
+                    // Comprobar si el formulario se ha enviado
+                    if ($request->isMethod('post')) {
+                        $request->validate([
+                            'image_url' => 'required|image|mimes:jpg,jpeg,png,gif',
+                            // Agrega más validaciones aquí para los otros campos si es necesario
+                        ]);
+                
+                        // Obtener el archivo subido
+                        $file = $request->file('image_url');
+                        $file_ext = $file->getClientOriginalExtension();
+                        $new_file_name = uniqid('', true) . '.' . $file_ext;
+                
+                        // Guardar la imagen en la carpeta "uploads"
+                        Storage::disk('public')->putFileAs('uploads', $file, $new_file_name);
+                
+                        // Obtener la URL completa de la imagen
+                        $image_url = asset('storage/uploads/' . $new_file_name);
+                
+                        // Recoger los datos del formulario
+                        $id_producto = $request->input('id');
+                        $nombre = $request->input('nombre');
+                        $precio = $request->input('precio');
+                        $descripcion = $request->input('descripcion');
+                        $categoria = $request->input('categoria');
+                        $estado = $request->input('estado');
+                        if ($request->hasFile('image_url')) {
+                            // Procesar la nueva imagen y obtener la URL
+                            // (código similar al que mencioné en respuestas anteriores)
+                            $new_image_url = $file;// Obtener la URL de la nueva imagen
+                        } else {
+                            // Utilizar la URL de la imagen actual almacenada en el campo oculto
+                            $new_image_url = $request->input('imagen_actual');
+                        }
+                        Producto::actualizarProducto($id_producto, $nombre, $precio, $descripcion, $categoria, $image_url, $estado);
+                
+                        $productos = Producto::listarProductos();
+            
+                return view('productos.index', ['productos' => $productos]);     
+                    }
+                }
+
+        
      
     }
 

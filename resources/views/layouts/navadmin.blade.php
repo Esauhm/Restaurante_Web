@@ -40,8 +40,8 @@
                             Productos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="productosDropdown">
-                            {{-- <li><a class="dropdown-item" href="{{ route('food.index') }}">Ver productos</a></li> --}}
-                            {{-- <li><a class="dropdown-item" href="{{ route('admin.productoA') }}">Agregar producto</a></li> --}}
+                         <li><a class="dropdown-item" href="{{ route('admin.productos') }}">Ver productos</a></li> 
+                           <li><a class="dropdown-item" href="{{ route('productos.add') }}">Agregar producto</a></li> 
                             {{-- <li><a class="dropdown-item" href="{{ route('admin.productoE') }}">Editar producto</a></li> --}}
                         </ul>
                     </li>

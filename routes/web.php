@@ -61,7 +61,6 @@ Route::prefix('roles')->group(function () {
 Route::view('/nosotros', 'home.nosotros')->name('nosotros');
 
 
-
 Route::get('/productos', [FoodController::class, 'index'])->name('food.index');
 
 
@@ -125,3 +124,15 @@ Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT
 
 
 Route::post('/detalle-pedido',  [AdminController::class, 'detallePedido'])->name('detalle.pedido');
+
+Route::post('/agregarproducto', [AdminController::class, 'agregarproducto'])->name('productos.create');
+
+Route::post('/agrega-productos', [AdminController::class, 'ProductosAdd'])->name('productos.add');
+
+Route::get('/admin/productos', [AdminController::class, 'Productos'])->name('admin.productos');
+
+Route::post('/Admin/cambiarEstadoProducto', [AdminController::class, 'cambiarEstadoProducto'])->name('admin.cambiarEstadoProducto');
+
+Route::get('/editar-producto', [AdminController::class, 'editarProducto'])->name('producto.editar');
+
+Route::post('/actualizarproducto', [AdminController::class, 'actualizarproducto'])->name('actualizar.producto');
