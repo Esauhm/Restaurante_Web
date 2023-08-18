@@ -1,7 +1,16 @@
+<style>
+    b{
+        background-image: linear-gradient(to right, #F2921D, #A61F69);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 5rem;
+    }
+</style>
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <b>PupuSA</b> 
         </x-slot>
 
         <x-validation-errors class="mb-4" />

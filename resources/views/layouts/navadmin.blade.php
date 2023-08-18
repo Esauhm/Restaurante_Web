@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light mb-3 navbar-fixed">
     <div class="container">
-        <a class="navbar-brand">Administrador</a>
+        <a class="navbar-brand" href="/">Administrador</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="promocionesDropdown">
 
-                            {{-- <li><a class="dropdown-item" href="{{ route('admin.promocionesA') }}">Agregar promoción</a></li> --}}
+                         <li><a class="dropdown-item" href="{{ route('promociones.create') }}">Agregar promoción</a>
 
                         </ul>
                     </li>

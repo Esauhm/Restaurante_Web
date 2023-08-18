@@ -5,7 +5,7 @@
     <form class="mt-5" method="post" action="{{ route('productos.create') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group row mb-3">
-            <label for="nombre" class="col-sm-3 col-form-label"><i class="fas fa-signature"></i> Nombre del
+            <label for="nombre" class="col-sm-3 col-form-label"></i> Nombre del
                 producto:</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" id="nombre" name="nombre" required>

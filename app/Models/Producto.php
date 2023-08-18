@@ -74,6 +74,7 @@ class Producto extends Model
     public static function agregarProducto($nombre, $precio, $descripcion_prod, $categoria, $image_url, $estado)
     {
         try {
+           
             DB::table('productos')->insert([
                 'nombre' => $nombre,
                 'precio' => $precio,

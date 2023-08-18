@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+    use Illuminate\Support\Facades\DB;
     use App\Models\Producto;
     use App\Models\pedido;
     use App\Models\Categoria;
@@ -174,39 +175,58 @@ namespace App\Http\Controllers;
                 return view('productos.create', ['categorias' => $categorias]);
             }
 
-        public function agregarproducto(Request $request)
+            public function agregarproducto(Request $request)
             {
                 $nombre = $request->input('nombre');
                 $precio = $request->input('precio');
                 $descripcion = $request->input('descripcion');
-                $categoria = $request->input('categoria');
-                $estado = $request->input('estado');
+                $estado = 1;
+                $es_promocion = $request->input('es_promocion'); // Capturar el valor del campo es_promocion
+            
+                if($es_promocion ===1){
 
+                }
                 // Obtener el archivo subido
                 $file = $request->file('image_url');
-
+            
                 // Verificar que el archivo sea una imagen con una extensión válida
                 $allowed_exts = ['jpg', 'jpeg', 'png', 'gif'];
                 $file_ext = strtolower($file->getClientOriginalExtension());
-
+            
                 if (!in_array($file_ext, $allowed_exts)) {
                     return "Error: El archivo no es una imagen válida.";
                 }
-
+            
                 // Guardar el archivo en el almacenamiento de Laravel (public/storage/uploads)
                 $new_file_name = uniqid('', true) . '.' . $file_ext;
                 $file->storeAs('public/uploads', $new_file_name);
-
+            
                 // Obtener la URL completa de la imagen
                 $image_url = Storage::url('uploads/' . $new_file_name);
-
+            
                 $producto = new Producto();
-
+                if($es_promocion ===1){
+                        $categoriaPromocion = DB::table('categorias')
+                        ->whereRaw("upper(descripcion) = upper('promocion')")
+                        ->select('id_categoria')
+                        ->first();              
+                    if ($categoriaPromocion) {
+                        $categoria = $categoriaPromocion->id_categoria;               
+                    } else {
+                    $categoria = $request->input('categoria');
+                    }
+                }else{
+                    $categoria = $request->input('categoria');
+                }
+                // Consulta para obtener la categoría 'promocion'
+                
+            
                 $resultado = $producto->agregarProducto($nombre, $precio, $descripcion, $categoria, $image_url, $estado);
-
-                // Si se agregó el producto correctamente, redirigir al listado de productos
-                return view('food.index');
+              // Si se agregó el producto correctamente, redirigir al listado de productos
+                return redirect()->route('food.index');
             }
+            
+            
 
             public function Productos()
             {
@@ -375,6 +395,11 @@ namespace App\Http\Controllers;
                 return view('usuario.perfil', ['usuario' => $usuario]);
             } 
         }
+
+  public function PromocionesAdd()
+{
+    return view('promociones.create');
+}
 
 
 

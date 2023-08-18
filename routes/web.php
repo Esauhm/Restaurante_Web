@@ -127,7 +127,7 @@ Route::post('/detalle-pedido',  [AdminController::class, 'detallePedido'])->name
 
 Route::post('/agregarproducto', [AdminController::class, 'agregarproducto'])->name('productos.create');
 
-Route::post('/agrega-productos', [AdminController::class, 'ProductosAdd'])->name('productos.add');
+Route::get('/agrega-productos', [AdminController::class, 'ProductosAdd'])->name('productos.add');
 
 Route::get('/admin/productos', [AdminController::class, 'Productos'])->name('admin.productos');
 
@@ -147,3 +147,5 @@ Route::get('/usuario/perfil', [AdminController::class, 'perfil'])->name('usuario
 Route::get('/usuario/editperfil', [AdminController::class, 'perfilE'])->name('usuario.editperfil');
 
 Route::post('/usuario/Editperfil', [AdminController::class, 'actualizarPerfil'])->name('usuario.actualizarPerfil');
+
+Route::get('promociones/add', [AdminController::class, 'PromocionesAdd'])->name('promociones.create');
