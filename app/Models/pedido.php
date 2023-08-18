@@ -84,6 +84,8 @@ class Pedido extends Model
                 ->where('pedidos.id_pedido', $idPedido)
                 ->first();
 
+              
+
             return $pedido;
 
         } catch (\Exception $e) {

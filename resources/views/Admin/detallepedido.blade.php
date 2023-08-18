@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-5">fecha: {{ $pedido->fecha_pedido }}</h1>
+    <h1 class="my-5">Pedido de {{ $pedidos->name }} fecha: {{ $pedidos->fecha_pedido }}</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h3>Lugar de envío: {{ $pedido->ubicacion }}</h3>
+            <h3>Lugar de envío: {{ $pedidos->ubicacion }}</h3>
         </div>
     </div>
     <div class="row">

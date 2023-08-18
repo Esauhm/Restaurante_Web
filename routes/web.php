@@ -125,3 +125,15 @@ Route::post('/pedido/procesarPedido', [PedidoController::class, 'procesarPedidoT
 
 
 Route::post('/detalle-pedido',  [AdminController::class, 'detallePedido'])->name('detalle.pedido');
+
+
+Route::post('/Admin/Pedido', [AdminController::class, 'pedidosA'])->name('admin.pedidos');
+
+Route::post('/Admin/Pedidos', [AdminController::class, 'cambiarEstado'])->name('admin.cambiarEstado');
+
+
+Route::get('/usuario/perfil', [AdminController::class, 'perfil'])->name('usuario.perfil');
+
+Route::get('/usuario/editperfil', [AdminController::class, 'perfilE'])->name('usuario.editperfil');
+
+Route::post('/usuario/Editperfil', [AdminController::class, 'actualizarPerfil'])->name('usuario.actualizarPerfil');
